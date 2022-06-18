@@ -14,7 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
     private let manager = CLLocationManager()
 
-    private lazy var map: MKMapView = {
+    private lazy var mapView: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
@@ -26,6 +26,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        button.setContentHuggingPriority(.defaultHigh + 10, for: .horizontal)
+        button.layer.cornerRadius = 45 / 2
+        button.backgroundColor = .systemGray.withAlphaComponent(0.25)
+        button.tintColor = .white
         return button
     }()
 
@@ -34,26 +38,59 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
         button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
+        button.layer.cornerRadius = 45 / 2
+        button.backgroundColor = .systemGray.withAlphaComponent(0.25)
+        button.tintColor = .white
         return button
     }()
 
-    private var locationName: UISegmentedControl = {
-        let modes: [String] = ["Standart", "Satellite", "Hybrid"]
-        let segmentedControl = UISegmentedControl(items: modes)
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.setContentHuggingPriority(UILayoutPriority(1000.0), for: .horizontal)
-        return segmentedControl
-    }()
-
-    private var locationHStack: UIStackView = {
+    private var buttonsHStack: UIStackView = {
         let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .equalSpacing
+        stack.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15)
+        stack.isLayoutMarginsRelativeArrangement = true
         stack.axis = .horizontal
         return stack
     }()
 
+    private var mapModeSegmentedControl: UISegmentedControl = {
+        let modes: [String] = ["Standard", "Satellite", "Hybrid"]
+        let segmentedControl = UISegmentedControl(items: modes)
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.addTarget(ViewController.self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        return segmentedControl
+    }()
+
+    private var modeHStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        stack.alignment = .center
+        return stack
+    }()
+
+    private var mainVStack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .vertical
+        return stack
+    }()
+
+    private func configureNavigationBar() {
+
+        title = "red"
+        navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.2)
+
+        let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesNavBarItemTapped))
+        navigationItem.rightBarButtonItem = cities
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureNavigationBar()
         configureViews()
     }
 
@@ -81,11 +118,25 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                 longitude: location.coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
-        map.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: true)
 
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
-        map.addAnnotation(pin)
+        mapView.addAnnotation(pin)
+    }
+
+    @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            mapView.mapType = .standard
+        } else if sender.selectedSegmentIndex == 1 {
+            mapView.mapType = .satellite
+        } else {
+            mapView.mapType = .hybrid
+        }
+    }
+
+    @objc private func citiesNavBarItemTapped() {
+        print("Cities")
     }
 
     @objc private func backButtonTapped() {
@@ -97,16 +148,31 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
 
     private func configureViews() {
-        view.addSubview(map)
+        modeHStack.addArrangedSubview(mapModeSegmentedControl)
+        [backButton, forwardButton].forEach(buttonsHStack.addArrangedSubview)
+        [buttonsHStack,modeHStack].forEach(mainVStack.addArrangedSubview)
+
+        [mapView, mainVStack].forEach(view.addSubview)
         makeConstraints()
     }
 
     private func makeConstraints() {
         NSLayoutConstraint.activate([
-            map.topAnchor.constraint(equalTo: view.topAnchor),
-            map.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            map.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            map.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            backButton.heightAnchor.constraint(equalToConstant: 45),
+            backButton.widthAnchor.constraint(equalToConstant: 45),
+
+            forwardButton.heightAnchor.constraint(equalToConstant: 45),
+            forwardButton.widthAnchor.constraint(equalToConstant: 45),
+
+            mainVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainVStack.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            mainVStack.heightAnchor.constraint(equalToConstant: 90),
         ])
     }
 }
