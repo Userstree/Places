@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     private let manager = CLLocationManager()
 
@@ -58,7 +58,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let modes: [String] = ["Standard", "Satellite", "Hybrid"]
         let segmentedControl = UISegmentedControl(items: modes)
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(ViewController.self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
+        segmentedControl.addTarget(MapViewController.self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         return segmentedControl
     }()
