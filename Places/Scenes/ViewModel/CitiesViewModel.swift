@@ -2,13 +2,13 @@
 // Created by Dossymkhan Zhulamanov on 19.06.2022.
 //
 
-import UIKit
+import Foundation
 
 protocol CitiesViewModel {
     func appendCity(city: City)
     func getCitiesList() -> [City]
     func removeCity(city: City)
-    var updateCitiesCallback: CitiesUpdatedCallback? { get set }
+    var citiesDidChange: CitiesUpdatedCallback? { get set }
 }
 
 typealias CitiesUpdatedCallback = () -> ()
@@ -16,7 +16,7 @@ typealias CitiesUpdatedCallback = () -> ()
 final class DefaultCitiesViewModel: CitiesViewModel {
 
     private var citiesModel: [City] = []
-    var updateCitiesCallback: CitiesUpdatedCallback?
+    var citiesDidChange: CitiesUpdatedCallback?
 
     init(model: [City]) {
         citiesModel = model
@@ -28,11 +28,11 @@ final class DefaultCitiesViewModel: CitiesViewModel {
 
     func appendCity(city: City) {
         citiesModel.append(city)
-        updateCitiesCallback?()
+        citiesDidChange?()
     }
 
     func removeCity(city: City) {
         citiesModel = citiesModel.filter { $0 !== city }
-        updateCitiesCallback?()
+        citiesDidChange?()
     }
 }
