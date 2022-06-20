@@ -9,6 +9,7 @@ protocol CitiesViewModel {
     func getCitiesList() -> [City]
     func removeCity(city: City)
     var citiesDidChangeCallback: CitiesCallback? { get set }
+    init(model: [City])
 }
 
 typealias CitiesCallback = () -> ()
@@ -18,7 +19,7 @@ final class DefaultCitiesViewModel: CitiesViewModel {
     private var citiesModel: [City] = []
     var citiesDidChangeCallback: CitiesCallback?
 
-    init(model: [City]) {
+    required init(model: [City]) {
         citiesModel = model
     }
 

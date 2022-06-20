@@ -139,7 +139,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @objc private func citiesNavBarItemTapped() {
-        let cities = CitiesViewController(viewModel: <#T##CitiesViewModel##Places.CitiesViewModel#>)
+//        let cities = CitiesViewController(viewModel: <#T##CitiesViewModel##Places.CitiesViewModel#>)
     }
 
     @objc private func backButtonTapped() {
