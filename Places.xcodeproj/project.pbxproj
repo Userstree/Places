@@ -13,6 +13,7 @@
 		615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */; };
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
 		C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */; };
+		F8843470C321C4916557F492 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432CB712A420FD3CEF230 /* UIView+ext.swift */; };
 		F884363AC7DFE158E87FB612 /* CitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843DCACF2B32AB7114F132 /* CitiesViewModel.swift */; };
 		F884371C883006E69BE47E2F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843C7D65529FEDAC301AA8 /* MapViewController.swift */; };
 		F88438F652E107BD3DC31851 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88434567D5DE2EDBEC628BF /* City.swift */; };
@@ -29,6 +30,7 @@
 		615B4F69F6361070D4A49255 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C23A6734285DA861007822F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C24A9F8D285D128F002A4425 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		F88432CB712A420FD3CEF230 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		F88434567D5DE2EDBEC628BF /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		F8843C509A43388E90253168 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		F8843C7D65529FEDAC301AA8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */,
 				F88433A8123E083909D27F81 /* Models */,
 				F8843394B398E792152D3408 /* ViewModels */,
+				F88437E17A6946A36653CE22 /* Extensions */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -137,6 +140,14 @@
 				F8843E8B97B854238BEAF9CA /* CitiesViewController.swift */,
 			);
 			path = CitiesViewController;
+			sourceTree = "<group>";
+		};
+		F88437E17A6946A36653CE22 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F88432CB712A420FD3CEF230 /* UIView+ext.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		F8843BC5565DF230E08E4147 /* MapMainViewConrtoller */ = {
@@ -226,6 +237,7 @@
 				F8843DA2ADAF4FD136374736 /* CitiesViewController.swift in Sources */,
 				F88438F652E107BD3DC31851 /* City.swift in Sources */,
 				F884363AC7DFE158E87FB612 /* CitiesViewModel.swift in Sources */,
+				F8843470C321C4916557F492 /* UIView+ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

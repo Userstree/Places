@@ -8,15 +8,15 @@ protocol CitiesViewModel {
     func appendCity(city: City)
     func getCitiesList() -> [City]
     func removeCity(city: City)
-    var updateCitiesCallback: CitiesUpdatedCallback? { get set }
+    var citiesDidChangeCallback: CitiesCallback? { get set }
 }
 
-typealias CitiesUpdatedCallback = () -> ()
+typealias CitiesCallback = () -> ()
 
 final class DefaultCitiesViewModel: CitiesViewModel {
 
     private var citiesModel: [City] = []
-    var updateCitiesCallback: CitiesUpdatedCallback?
+    var citiesDidChangeCallback: CitiesCallback?
 
     init(model: [City]) {
         citiesModel = model
@@ -28,11 +28,11 @@ final class DefaultCitiesViewModel: CitiesViewModel {
 
     func appendCity(city: City) {
         citiesModel.append(city)
-        updateCitiesCallback?()
+        citiesDidChangeCallback?()
     }
 
     func removeCity(city: City) {
         citiesModel = citiesModel.filter { $0 !== city }
-        updateCitiesCallback?()
+        citiesDidChangeCallback?()
     }
 }

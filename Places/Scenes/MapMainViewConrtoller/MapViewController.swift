@@ -28,8 +28,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         button.setContentHuggingPriority(.defaultHigh + 10, for: .horizontal)
         button.layer.cornerRadius = 45 / 2
-        button.backgroundColor = .systemGray.withAlphaComponent(0.25)
-        button.tintColor = .white
+        button.backgroundColor = .white
+        button.addShadow(offset: CGSize(width: 2, height: 2), color: .systemGray2, radius: 3, opacity: 0.8)
+        button.tintColor = .black
         return button
     }()
 
@@ -39,8 +40,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         button.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
         button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
         button.layer.cornerRadius = 45 / 2
-        button.backgroundColor = .systemGray.withAlphaComponent(0.25)
-        button.tintColor = .white
+        button.backgroundColor = .white
+        button.addShadow(offset: CGSize(width: 2, height: 2), color: .systemGray2, radius: 3, opacity: 0.8)
+        button.tintColor = .black
         return button
     }()
 
@@ -137,7 +139,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     @objc private func citiesNavBarItemTapped() {
-        print("Cities")
+        let cities = CitiesViewController(viewModel: <#T##CitiesViewModel##Places.CitiesViewModel#>)
     }
 
     @objc private func backButtonTapped() {
