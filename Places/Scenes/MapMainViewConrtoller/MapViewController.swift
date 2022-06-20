@@ -58,7 +58,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         let modes: [String] = ["Standard", "Satellite", "Hybrid"]
         let segmentedControl = UISegmentedControl(items: modes)
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(MapViewController.self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
+        segmentedControl.addTarget(self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         return segmentedControl
     }()
@@ -130,6 +130,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             mapView.mapType = .standard
         } else if sender.selectedSegmentIndex == 1 {
             mapView.mapType = .satellite
+
         } else {
             mapView.mapType = .hybrid
         }
