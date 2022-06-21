@@ -13,12 +13,14 @@
 		615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */; };
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
 		C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */; };
+		F884303AA06161597E71141C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843BCD5FA0E4F74E6AFA0F /* MapViewController.swift */; };
+		F884338C09BEFBA5D7001E97 /* TransitionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843F28547A23BDC12BC35C /* TransitionButton.swift */; };
 		F8843470C321C4916557F492 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432CB712A420FD3CEF230 /* UIView+ext.swift */; };
-		F884363AC7DFE158E87FB612 /* CitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843DCACF2B32AB7114F132 /* CitiesViewModel.swift */; };
-		F884371C883006E69BE47E2F /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843C7D65529FEDAC301AA8 /* MapViewController.swift */; };
-		F88438F652E107BD3DC31851 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88434567D5DE2EDBEC628BF /* City.swift */; };
-		F8843C5383D141D87A4B9203 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843C509A43388E90253168 /* CityTableViewCell.swift */; };
-		F8843DA2ADAF4FD136374736 /* CitiesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843E8B97B854238BEAF9CA /* CitiesViewController.swift */; };
+		F884379E01CFCD03B894A5C9 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */; };
+		F88438A806A006637F6470BB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88438C643194F8660E82B29 /* City.swift */; };
+		F8843D62FB2A7DB9C993915A /* CitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843E7C27635E62B0D2C8AE /* CitiesViewModel.swift */; };
+		F8843EA3FED16B86C52545CF /* Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843EA5D95DA44D35771EE3 /* Factory.swift */; };
+		F8843FD9675D208E589A02F6 /* UIStackView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88437DAA0ECD38339B38828 /* UIStackView+ext.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,11 +33,13 @@
 		C23A6734285DA861007822F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C24A9F8D285D128F002A4425 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F88432CB712A420FD3CEF230 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
-		F88434567D5DE2EDBEC628BF /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
-		F8843C509A43388E90253168 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
-		F8843C7D65529FEDAC301AA8 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
-		F8843DCACF2B32AB7114F132 /* CitiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesViewModel.swift; sourceTree = "<group>"; };
-		F8843E8B97B854238BEAF9CA /* CitiesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesViewController.swift; sourceTree = "<group>"; };
+		F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		F88437DAA0ECD38339B38828 /* UIStackView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+ext.swift"; sourceTree = "<group>"; };
+		F88438C643194F8660E82B29 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		F8843BCD5FA0E4F74E6AFA0F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		F8843E7C27635E62B0D2C8AE /* CitiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesViewModel.swift; sourceTree = "<group>"; };
+		F8843EA5D95DA44D35771EE3 /* Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
+		F8843F28547A23BDC12BC35C /* TransitionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,8 +79,6 @@
 				615B44F3DE013FB347033C1D /* Application */,
 				615B48BAAEB7B9C7DD5CBD8F /* LaunchScreen.storyboard */,
 				C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */,
-				F88433A8123E083909D27F81 /* Models */,
-				F8843394B398E792152D3408 /* ViewModels */,
 				F88437E17A6946A36653CE22 /* Extensions */,
 			);
 			path = Places;
@@ -103,8 +105,9 @@
 		615B4AE9825AFF894E83FC2B /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				F88436735D5E99635AF03825 /* CitiesViewController */,
-				F8843BC5565DF230E08E4147 /* MapMainViewConrtoller */,
+				F8843012F4439A8CA369D9F9 /* Views */,
+				F8843194E524A6F5755F21E6 /* Models */,
+				F884378DBDAC41359CF0992D /* ViewModels */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -117,53 +120,64 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		F8843394B398E792152D3408 /* ViewModels */ = {
+		F8843012F4439A8CA369D9F9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F8843DCACF2B32AB7114F132 /* CitiesViewModel.swift */,
+				F8843201F8B63F52BE0B6EBF /* MapMainViewConrtoller */,
+				F8843EA5D95DA44D35771EE3 /* Factory.swift */,
 			);
-			path = ViewModels;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		F88433A8123E083909D27F81 /* Models */ = {
+		F8843032688FB4DFAAA7D3DC /* CitiesTableView */ = {
 			isa = PBXGroup;
 			children = (
-				F88434567D5DE2EDBEC628BF /* City.swift */,
+				F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */,
+			);
+			path = CitiesTableView;
+			sourceTree = "<group>";
+		};
+		F8843194E524A6F5755F21E6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F88438C643194F8660E82B29 /* City.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F88436735D5E99635AF03825 /* CitiesViewController */ = {
+		F8843201F8B63F52BE0B6EBF /* MapMainViewConrtoller */ = {
 			isa = PBXGroup;
 			children = (
-				F8843E8AB9CD803243FFFC3D /* CitiesTableView */,
-				F8843E8B97B854238BEAF9CA /* CitiesViewController.swift */,
+				F8843BCD5FA0E4F74E6AFA0F /* MapViewController.swift */,
+				F88433F58FE07A3B0B16B3C2 /* TransitionButton */,
+				F8843032688FB4DFAAA7D3DC /* CitiesTableView */,
 			);
-			path = CitiesViewController;
+			path = MapMainViewConrtoller;
+			sourceTree = "<group>";
+		};
+		F88433F58FE07A3B0B16B3C2 /* TransitionButton */ = {
+			isa = PBXGroup;
+			children = (
+				F8843F28547A23BDC12BC35C /* TransitionButton.swift */,
+			);
+			path = TransitionButton;
+			sourceTree = "<group>";
+		};
+		F884378DBDAC41359CF0992D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F8843E7C27635E62B0D2C8AE /* CitiesViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		F88437E17A6946A36653CE22 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				F88432CB712A420FD3CEF230 /* UIView+ext.swift */,
+				F88437DAA0ECD38339B38828 /* UIStackView+ext.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		F8843BC5565DF230E08E4147 /* MapMainViewConrtoller */ = {
-			isa = PBXGroup;
-			children = (
-				F8843C7D65529FEDAC301AA8 /* MapViewController.swift */,
-			);
-			path = MapMainViewConrtoller;
-			sourceTree = "<group>";
-		};
-		F8843E8AB9CD803243FFFC3D /* CitiesTableView */ = {
-			isa = PBXGroup;
-			children = (
-				F8843C509A43388E90253168 /* CityTableViewCell.swift */,
-			);
-			path = CitiesTableView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,12 +246,14 @@
 				615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */,
 				615B4AF3BB801BA37D7225DB /* AppDelegate.swift in Sources */,
 				C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */,
-				F8843C5383D141D87A4B9203 /* CityTableViewCell.swift in Sources */,
-				F884371C883006E69BE47E2F /* MapViewController.swift in Sources */,
-				F8843DA2ADAF4FD136374736 /* CitiesViewController.swift in Sources */,
-				F88438F652E107BD3DC31851 /* City.swift in Sources */,
-				F884363AC7DFE158E87FB612 /* CitiesViewModel.swift in Sources */,
 				F8843470C321C4916557F492 /* UIView+ext.swift in Sources */,
+				F884303AA06161597E71141C /* MapViewController.swift in Sources */,
+				F88438A806A006637F6470BB /* City.swift in Sources */,
+				F8843D62FB2A7DB9C993915A /* CitiesViewModel.swift in Sources */,
+				F884338C09BEFBA5D7001E97 /* TransitionButton.swift in Sources */,
+				F8843EA3FED16B86C52545CF /* Factory.swift in Sources */,
+				F8843FD9675D208E589A02F6 /* UIStackView+ext.swift in Sources */,
+				F884379E01CFCD03B894A5C9 /* CityTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

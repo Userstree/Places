@@ -23,9 +23,8 @@ class CityTableViewCell: UITableViewCell {
     }()
 
     private lazy var mainVStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .vertical
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        let stack = UIStackView(viewElements: [cityNameLabel, cityLocationLabel])
+        stack.alignment = .fill
         return stack
     }()
 
@@ -37,11 +36,9 @@ class CityTableViewCell: UITableViewCell {
 
     func configure(with model: City) {
         cityNameLabel.text = model.cityName
-        cityLocationLabel.text = model.cityLocation
     }
 
     private func configureViews() {
-        [cityNameLabel, cityLocationLabel].forEach(mainVStack.addArrangedSubview)
         contentView.addSubview(mainVStack)
 
         makeConstraints()

@@ -3,20 +3,21 @@
 //
 
 import UIKit
+import MapKit
 
 struct Coordinates {
     var latitude: String
     var longitude: String
 }
 
+typealias Cities = [City]
+
 class City {
     var cityName: String
-    var cityLocation: String
-    var coordinates: Coordinates
+    var coordinates: CLLocation
 
-    init(cityName: String, cityLocation: String, coordinates: Coordinates) {
+    init(cityName: String, coordinates: CLLocation) {
         self.cityName = cityName
-        self.cityLocation = cityLocation
         self.coordinates = coordinates
     }
 }

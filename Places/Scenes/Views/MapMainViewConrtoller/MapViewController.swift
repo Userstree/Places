@@ -10,9 +10,29 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController {
+
+    init(viewModel: CitiesViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init?(coder: NSCoder) hasn't been implemented")
+    }
+
+//    private lazy var tableView: UITableView = {
+//        let tableView = UITableView()
+//        tableView.translatesAutoresizingMaskIntoConstraints = false
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+//        return tableView
+//    }()
 
     private let manager = CLLocationManager()
+
+    private var viewModel: CitiesViewModel
 
     private lazy var mapView: MKMapView = {
         let map = MKMapView()
@@ -22,33 +42,19 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }()
 
     private lazy var backButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        let button = TransitionButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        button.setContentHuggingPriority(.defaultHigh + 10, for: .horizontal)
-        button.layer.cornerRadius = 45 / 2
-        button.backgroundColor = .white
-        button.addShadow(offset: CGSize(width: 2, height: 2), color: .systemGray2, radius: 3, opacity: 0.8)
-        button.tintColor = .black
         return button
     }()
 
     private lazy var forwardButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrow.forward"), for: .normal)
+        let button = TransitionButton().makeButton(withImage: UIImage(systemName: "arrow.forward")!)
         button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
-        button.layer.cornerRadius = 45 / 2
-        button.backgroundColor = .white
-        button.addShadow(offset: CGSize(width: 2, height: 2), color: .systemGray2, radius: 3, opacity: 0.8)
-        button.tintColor = .black
         return button
     }()
 
-    private var buttonsHStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
+    private lazy var buttonsHStack: UIStackView = {
+        let stack = UIStackView(viewElements: [backButton, forwardButton])
         stack.distribution = .equalSpacing
         stack.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15)
         stack.isLayoutMarginsRelativeArrangement = true
@@ -65,18 +71,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return segmentedControl
     }()
 
-    private var modeHStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
-        stack.alignment = .center
+    private lazy var modeHStack: UIStackView = {
+        let stack = UIStackView(viewElements: [mapModeSegmentedControl])
         return stack
     }()
 
-    private var mainVStack: UIStackView = {
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.axis = .vertical
+    private lazy var mainVStack: UIStackView = {
+        let stack = UIStackView(viewElements: [buttonsHStack,modeHStack])
+        stack.alignment = .fill
         return stack
     }()
 
@@ -107,17 +109,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
 
-        if let location = locations.first{
+        let cities = viewModel.getCitiesList()
+        if let city = cities.first {
             manager.stopUpdatingLocation()
 
-            render(location)
+            render(city.coordinates)
         }
     }
 
     private func render(_ location: CLLocation) {
 
         let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                longitude: location.coordinate.longitude)
+                                                longitude: location.coordinate.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
@@ -132,15 +135,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             mapView.mapType = .standard
         } else if sender.selectedSegmentIndex == 1 {
             mapView.mapType = .satellite
-
         } else {
             mapView.mapType = .hybrid
         }
     }
 
-    @objc private func citiesNavBarItemTapped() {
-//        let cities = CitiesViewController(viewModel: <#T##CitiesViewModel##Places.CitiesViewModel#>)
-    }
+    @objc private func citiesNavBarItemTapped() { }
 
     @objc private func backButtonTapped() {
         print("go back")
@@ -151,10 +151,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     }
 
     private func configureViews() {
-        modeHStack.addArrangedSubview(mapModeSegmentedControl)
-        [backButton, forwardButton].forEach(buttonsHStack.addArrangedSubview)
-        [buttonsHStack,modeHStack].forEach(mainVStack.addArrangedSubview)
-
         [mapView, mainVStack].forEach(view.addSubview)
         makeConstraints()
     }
@@ -179,3 +175,30 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         ])
     }
 }
+
+extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {}
+
+//extension MapViewController: UITableViewDelegate, UITableViewDataSource {
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        viewModel.
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
+//                for: indexPath) as! CityTableViewCell
+//        cell.configure(with: cities[indexPath.row])
+//        return cell
+//    }
+//
+//    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        true
+//    }
+//
+//    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            viewModel.removeCity(city: cities[indexPath.row])
+//            tableView.reloadData()
+//        }
+//    }
+//}

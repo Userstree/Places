@@ -3,12 +3,13 @@
 //
 
 import UIKit
+import MapKit
 
 protocol CitiesViewModel {
     func appendCity(city: City)
     func getCitiesList() -> [City]
     func removeCity(city: City)
-    var citiesDidChangeCallback: CitiesCallback? { get set }
+    var updateLocation: CitiesCallback? { get set }
     init(model: [City])
 }
 
@@ -16,8 +17,13 @@ typealias CitiesCallback = () -> ()
 
 final class DefaultCitiesViewModel: CitiesViewModel {
 
-    private var citiesModel: [City] = []
-    var citiesDidChangeCallback: CitiesCallback?
+    var updateLocation: CitiesCallback?
+
+    var citiesModel = [City]() {
+        didSet {
+            updateLocation?()
+        }
+    }
 
     required init(model: [City]) {
         citiesModel = model
@@ -29,11 +35,11 @@ final class DefaultCitiesViewModel: CitiesViewModel {
 
     func appendCity(city: City) {
         citiesModel.append(city)
-        citiesDidChangeCallback?()
+        updateLocation?()
     }
 
     func removeCity(city: City) {
         citiesModel = citiesModel.filter { $0 !== city }
-        citiesDidChangeCallback?()
+        updateLocation?()
     }
 }
