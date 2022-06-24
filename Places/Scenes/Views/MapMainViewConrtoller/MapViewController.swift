@@ -21,14 +21,14 @@ class MapViewController: UIViewController {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView()
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
-//        return tableView
-//    }()
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
+        return tableView
+    }()
 
     private let manager = CLLocationManager()
 
@@ -94,6 +94,9 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let cities = CityStore()
+        tableView.dataSource = cities.allCities()
+
         configureNavigationBar()
         configureViews()
     }
@@ -133,14 +136,19 @@ class MapViewController: UIViewController {
     @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             mapView.mapType = .standard
+            mapModeSegmentedControl.backgroundColor = .clear
         } else if sender.selectedSegmentIndex == 1 {
             mapView.mapType = .satellite
+            mapModeSegmentedControl.backgroundColor = .white
         } else {
             mapView.mapType = .hybrid
+            mapModeSegmentedControl.backgroundColor = .white
         }
     }
 
-    @objc private func citiesNavBarItemTapped() { }
+    @objc private func citiesNavBarItemTapped() {
+
+    }
 
     @objc private func backButtonTapped() {
         print("go back")
@@ -178,27 +186,27 @@ class MapViewController: UIViewController {
 
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {}
 
-//extension MapViewController: UITableViewDelegate, UITableViewDataSource {
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        viewModel.
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
-//                for: indexPath) as! CityTableViewCell
-//        cell.configure(with: cities[indexPath.row])
-//        return cell
-//    }
-//
-//    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        true
-//    }
-//
-//    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-//        if editingStyle == .delete {
-//            viewModel.removeCity(city: cities[indexPath.row])
-//            tableView.reloadData()
-//        }
-//    }
-//}
+extension MapViewController: UITableViewDelegate, UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        viewModel.getCitiesList().count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
+                for: indexPath) as! CityTableViewCell
+        cell.configure(with: )
+        return cell
+    }
+
+    public func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.removeCity(city: cities[indexPath.row])
+            tableView.reloadData()
+        }
+    }
+}

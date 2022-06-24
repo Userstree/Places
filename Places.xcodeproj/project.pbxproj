@@ -14,7 +14,9 @@
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
 		C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */; };
 		F884303AA06161597E71141C /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843BCD5FA0E4F74E6AFA0F /* MapViewController.swift */; };
+		F8843166275B8CAFBEBC4B54 /* CityTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88436E85654960EE725D856 /* CityTableViewDataSource.swift */; };
 		F884338C09BEFBA5D7001E97 /* TransitionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843F28547A23BDC12BC35C /* TransitionButton.swift */; };
+		F88433C26D5EFE9FDDDEF55C /* CityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843A6DE41133687D688006 /* CityStore.swift */; };
 		F8843470C321C4916557F492 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432CB712A420FD3CEF230 /* UIView+ext.swift */; };
 		F884379E01CFCD03B894A5C9 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */; };
 		F88438A806A006637F6470BB /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88438C643194F8660E82B29 /* City.swift */; };
@@ -34,8 +36,10 @@
 		C24A9F8D285D128F002A4425 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F88432CB712A420FD3CEF230 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
+		F88436E85654960EE725D856 /* CityTableViewDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewDataSource.swift; sourceTree = "<group>"; };
 		F88437DAA0ECD38339B38828 /* UIStackView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+ext.swift"; sourceTree = "<group>"; };
 		F88438C643194F8660E82B29 /* City.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		F8843A6DE41133687D688006 /* CityStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityStore.swift; sourceTree = "<group>"; };
 		F8843BCD5FA0E4F74E6AFA0F /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F8843E7C27635E62B0D2C8AE /* CitiesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesViewModel.swift; sourceTree = "<group>"; };
 		F8843EA5D95DA44D35771EE3 /* Factory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Factory.swift; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 			isa = PBXGroup;
 			children = (
 				F884335FD1B0269DCBB497EC /* CityTableViewCell.swift */,
+				F88436E85654960EE725D856 /* CityTableViewDataSource.swift */,
+				F8843A6DE41133687D688006 /* CityStore.swift */,
 			);
 			path = CitiesTableView;
 			sourceTree = "<group>";
@@ -254,6 +260,8 @@
 				F8843EA3FED16B86C52545CF /* Factory.swift in Sources */,
 				F8843FD9675D208E589A02F6 /* UIStackView+ext.swift in Sources */,
 				F884379E01CFCD03B894A5C9 /* CityTableViewCell.swift in Sources */,
+				F8843166275B8CAFBEBC4B54 /* CityTableViewDataSource.swift in Sources */,
+				F88433C26D5EFE9FDDDEF55C /* CityStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
