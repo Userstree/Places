@@ -94,8 +94,8 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let cities = CityStore()
-        tableView.dataSource = cities.allCities()
+        let datasource = CityTableViewDataSource()
+        tableView.dataSource = datasource
 
         configureNavigationBar()
         configureViews()
