@@ -21,15 +21,6 @@ class MapViewController: UIViewController {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
-        return tableView
-    }()
-
     private let manager = CLLocationManager()
 
     private var viewModel: CitiesViewModel
@@ -41,43 +32,41 @@ class MapViewController: UIViewController {
         return map
     }()
 
-    private lazy var backButton: UIButton = {
-        let button = TransitionButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var forwardButton: UIButton = {
-        let button = TransitionButton().makeButton(withImage: UIImage(systemName: "arrow.forward")!)
-        button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var buttonsHStack: UIStackView = {
-        let stack = UIStackView(viewElements: [backButton, forwardButton])
-        stack.distribution = .equalSpacing
-        stack.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15)
-        stack.isLayoutMarginsRelativeArrangement = true
-        stack.axis = .horizontal
-        return stack
-    }()
-
-    private var mapModeSegmentedControl: UISegmentedControl = {
-        let modes: [String] = ["Standard", "Satellite", "Hybrid"]
-        let segmentedControl = UISegmentedControl(items: modes)
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        return segmentedControl
-    }()
-
-    private lazy var modeHStack: UIStackView = {
-        let stack = UIStackView(viewElements: [mapModeSegmentedControl])
-        return stack
-    }()
+//    private var mapModeSegmentedControl: UISegmentedControl = {
+//        let modes: [String] = ["Standard", "Satellite", "Hybrid"]
+//        let segmentedControl = UISegmentedControl(items: modes)
+//        segmentedControl.selectedSegmentIndex = 0
+//        segmentedControl.addTarget(self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
+//        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+//        return segmentedControl
+//    }()
+//
+//    private lazy var mapModeHStack: UIStackView = {
+//        let stack = UIStackView(viewElements: [mapModeSegmentedControl])
+//        return stack
+//    }()
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//
+//    }
+//
+//    @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
+//        if sender.selectedSegmentIndex == 0 {
+//            mapView.mapType = .standard
+//            mapModeSegmentedControl.backgroundColor = .clear
+//        } else if sender.selectedSegmentIndex == 1 {
+//            mapView.mapType = .satellite
+//            mapModeSegmentedControl.backgroundColor = .white
+//        } else {
+//            mapView.mapType = .hybrid
+//            mapModeSegmentedControl.backgroundColor = .white
+//        }
+//    }
 
     private lazy var mainVStack: UIStackView = {
-        let stack = UIStackView(viewElements: [buttonsHStack,modeHStack])
+        let stack = UIStackView(viewElements: [mapModeHStack])
         stack.alignment = .fill
         return stack
     }()
@@ -93,9 +82,6 @@ class MapViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let datasource = CityTableViewDataSource()
-        tableView.dataSource = datasource
 
         configureNavigationBar()
         configureViews()
@@ -131,19 +117,6 @@ class MapViewController: UIViewController {
         let pin = MKPointAnnotation()
         pin.coordinate = coordinate
         mapView.addAnnotation(pin)
-    }
-
-    @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
-            mapView.mapType = .standard
-            mapModeSegmentedControl.backgroundColor = .clear
-        } else if sender.selectedSegmentIndex == 1 {
-            mapView.mapType = .satellite
-            mapModeSegmentedControl.backgroundColor = .white
-        } else {
-            mapView.mapType = .hybrid
-            mapModeSegmentedControl.backgroundColor = .white
-        }
     }
 
     @objc private func citiesNavBarItemTapped() {

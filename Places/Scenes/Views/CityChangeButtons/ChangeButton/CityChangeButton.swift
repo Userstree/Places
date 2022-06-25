@@ -4,11 +4,11 @@
 
 import UIKit
 
-protocol Transitionable {
+protocol CityChangeable {
     func makeButton(withImage image: UIImage) -> UIButton
 }
 
-extension Transitionable where Self: UIButton {
+extension CityChangeable where Self: UIButton {
     func makeButton(withImage image: UIImage) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -22,7 +22,7 @@ extension Transitionable where Self: UIButton {
     }
 }
 
-internal class TransitionButton: UIButton, Transitionable { }
+internal class CityChangeButton: UIButton, CityChangeable { }
 
 
 
