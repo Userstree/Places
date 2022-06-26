@@ -41,6 +41,11 @@ class CityChangeButtons: UIViewController {
     }
 
     private func configureViews() {
+        view.addSubview(buttonsHStack)
+        makeConstraints()
+    }
+
+    private func makeConstraints() {
         NSLayoutConstraint.activate([
             backButton.heightAnchor.constraint(equalToConstant: 45),
             backButton.widthAnchor.constraint(equalToConstant: 45),

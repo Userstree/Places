@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Place" representedClassName="Place" syncable="YES" codeGenerationType="class">
-        <attribute name="almaty" optional="YES" attributeType="String"/>
-        <attribute name="astana" optional="YES" attributeType="String"/>
-        <attribute name="shymkent" optional="YES" attributeType="String"/>
-    </entity>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Place" representedClassName="Place" syncable="YES" codeGenerationType="class"/>
     <elements>
-        <element name="Place" positionX="-3248.16015625" positionY="-3605.33984375" width="258.53125" height="74"/>
+        <element name="Place" positionX="-3248.16015625" positionY="-3605.33984375" width="258.53125" height="29"/>
     </elements>
 </model>

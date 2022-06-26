@@ -34,7 +34,7 @@ class CityTableViewCell: UITableViewCell {
         configureViews()
     }
 
-    func configure(with model: City) {
+    func configure(with model: CityItem) {
         cityNameLabel.text = model.cityName
     }
 

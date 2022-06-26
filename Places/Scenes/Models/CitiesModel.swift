@@ -5,16 +5,12 @@
 import UIKit
 import MapKit
 
-struct Coordinates {
-    var latitude: String
-    var longitude: String
-}
+typealias CitiesModel = [CityItem]
 
-typealias Cities = [City]
-
-class City {
-    var cityName: String
-    var coordinates: CLLocation
+class CityItem {
+    let id: Int?
+    var cityName: String?
+    var coordinates: CLLocation?
 
     init(cityName: String, coordinates: CLLocation) {
         self.cityName = cityName
