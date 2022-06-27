@@ -29,12 +29,10 @@ class CityTableViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let datasource = CityTableViewDataSource()
-        tableView.dataSource = datasource
     }
 }
 
-extension CityTableViewController: UITableViewDelegate {
+extension CityTableViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.getCitiesList().count
