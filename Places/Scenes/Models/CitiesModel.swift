@@ -8,9 +8,8 @@ import MapKit
 typealias CitiesModel = [CityItem]
 
 class CityItem {
-    let id: Int?
-    var cityName: String?
-    var coordinates: CLLocation?
+    var cityName: String
+    var coordinates: CLLocation
 
     init(cityName: String, coordinates: CLLocation) {
         self.cityName = cityName

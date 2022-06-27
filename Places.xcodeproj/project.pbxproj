@@ -21,7 +21,7 @@
 		615B4EE0C2E216BD97BD735C /* MapModeSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B49F30D9B6F5B6C129A73 /* MapModeSegmentedControl.swift */; };
 		615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */; };
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
-		C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */; };
+		C24A9F8E285D128F002A4425 /* PlacesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */; };
 		F8843175C8F63E5329EF20A7 /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843DABA4D0F20B5F8F6130 /* UIViewController+ext.swift */; };
 		F8843470C321C4916557F492 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432CB712A420FD3CEF230 /* UIView+ext.swift */; };
 		F88438A806A006637F6470BB /* CitiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88438C643194F8660E82B29 /* CitiesModel.swift */; };
@@ -144,7 +144,7 @@
 				615B4A823F8A7D049B7FD936 /* Supporting Files */,
 				615B44F3DE013FB347033C1D /* Application */,
 				615B48BAAEB7B9C7DD5CBD8F /* LaunchScreen.storyboard */,
-				C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */,
+				C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */,
 				F88437E17A6946A36653CE22 /* Extensions */,
 				615B40364C96D806F109D440 /* CoreData */,
 			);
@@ -309,7 +309,7 @@
 			files = (
 				615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */,
 				615B4AF3BB801BA37D7225DB /* AppDelegate.swift in Sources */,
-				C24A9F8E285D128F002A4425 /* Model.xcdatamodeld in Sources */,
+				C24A9F8E285D128F002A4425 /* PlacesModel.xcdatamodeld in Sources */,
 				F8843470C321C4916557F492 /* UIView+ext.swift in Sources */,
 				F88438A806A006637F6470BB /* CitiesModel.swift in Sources */,
 				F8843D62FB2A7DB9C993915A /* CitiesViewModel.swift in Sources */,
@@ -526,13 +526,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C24A9F8C285D128F002A4425 /* Model.xcdatamodeld */ = {
+		C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
 				C24A9F8D285D128F002A4425 /* Model.xcdatamodel */,
 			);
 			currentVersion = C24A9F8D285D128F002A4425 /* Model.xcdatamodel */;
-			path = Model.xcdatamodeld;
+			path = PlacesModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

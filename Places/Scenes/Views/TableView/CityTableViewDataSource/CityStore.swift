@@ -16,5 +16,4 @@ class CityStore {
     func save(name: String) {
 
     }
-
  }
