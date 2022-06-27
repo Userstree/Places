@@ -5,9 +5,14 @@
 import UIKit
 import MapKit
 
+protocol CityTableViewCellDataSource {
+    var cityName: String { get set }
+    var coordinates: CLLocation { get set }
+}
+
 typealias CitiesModel = [CityItem]
 
-class CityItem {
+class CityItem: CityTableViewCellDataSource {
     var cityName: String
     var coordinates: CLLocation
 

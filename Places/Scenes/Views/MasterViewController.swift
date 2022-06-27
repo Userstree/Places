@@ -17,32 +17,41 @@ class MasterViewController: UIViewController {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-    private lazy var mapViewController: MapViewController = {
-        let controller = MapViewController(viewModel: viewModel)
-//        controller.view.frame = view.bounds
-        return controller
-    }()
+    private var isCitiesTableViewEnabled: Bool = false {
+        didSet {
+            if isCitiesTableViewEnabled {
+                add(citiesTableViewController, frame: view.frame)
+            } else {
+                citiesTableViewController.remove()
+                add(mapViewController, frame: view.frame)
+            }
+        }
+    }
+
+    private lazy var mapViewController = MapViewController(viewModel: viewModel)
+
+    private lazy var citiesTableViewController = CitiesTableViewController(viewModel: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        setupChildViewController()
+        configureNavigationBar()
+        setupChildViewControllers()
     }
 
     private func configureNavigationBar() {
-
         title = "red"
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.2)
 
-        let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesNavBarItemTapped))
+        let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities
     }
 
-    @objc private func citiesNavBarItemTapped() {
-
+    @objc private func citiesBookNavBarItemTapped() {
+        isCitiesTableViewEnabled = !isCitiesTableViewEnabled
     }
 
-    private func setupChildViewController() {
-
+    private func setupChildViewControllers() {
+        add(mapViewController, frame: self.view.frame)
     }
 }

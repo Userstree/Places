@@ -3,6 +3,8 @@
 //
 
 import UIKit
+import MapKit
+
 
 class CityTableViewCell: UITableViewCell {
 
@@ -24,6 +26,7 @@ class CityTableViewCell: UITableViewCell {
 
     private lazy var mainVStack: UIStackView = {
         let stack = UIStackView(viewElements: [cityNameLabel, cityLocationLabel])
+        stack.backgroundColor = .clear
         stack.alignment = .fill
         return stack
     }()
@@ -34,13 +37,16 @@ class CityTableViewCell: UITableViewCell {
         configureViews()
     }
 
-    func configure(with model: CityItem) {
+    func configure(with model: CityTableViewCellDataSource) {
         cityNameLabel.text = model.cityName
+        let latitude = String(format: "Lat: %.2f", model.coordinates.coordinate.latitude)
+        let longitude = String(format: "Lon: %.2f", model.coordinates.coordinate.longitude)
+        cityLocationLabel.text = "\(latitude)\t&\t\(longitude) "
     }
 
     private func configureViews() {
         contentView.addSubview(mainVStack)
-
+        contentView.backgroundColor = .clear
         makeConstraints()
     }
 

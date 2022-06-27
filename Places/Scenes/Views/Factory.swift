@@ -16,7 +16,7 @@ final class Factory: FactoryProtocol {
             CityItem(cityName: "Astana", coordinates: CLLocation(latitude: 51.169392, longitude: 71.449074)),
             CityItem(cityName: "Aktau", coordinates: CLLocation(latitude: 43.693695, longitude: 51.260834))
         ]
-        let viewModel = DefaultCitiesViewModel(model: model)
-        return MapViewController(viewModel: viewModel)
+        let viewModel:CitiesViewModel = DefaultCitiesViewModel(model: model)
+        return MasterViewController(viewModel: viewModel)
     }
 }

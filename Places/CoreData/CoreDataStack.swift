@@ -12,7 +12,7 @@ class CoreDataStack {
         self.modelName = modelName
     }
 
-    private lazy var storeContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: self.modelName)
         container.loadPersistentStores { _, error in
             if let error = error as NSError? {
@@ -22,7 +22,7 @@ class CoreDataStack {
         return container
     }()
 
-    lazy var managedContext: NSManagedObjectContext = storeContainer.viewContext
+    lazy var managedContext: NSManagedObjectContext = persistentContainer.viewContext
 
     func saveContext() {
         guard managedContext.hasChanges else { return }

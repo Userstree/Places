@@ -18,11 +18,13 @@ class CityChangeButtons: UIViewController {
         return button
     }()
 
-    private lazy var buttonsHStack: UIStackView = {
+    lazy var buttonsHStack: UIStackView = {
         let stack = UIStackView(viewElements: [backButton, forwardButton])
         stack.distribution = .equalSpacing
+        stack.backgroundColor = .systemGray3
         stack.layoutMargins = UIEdgeInsets(top: 0, left: 15, bottom: 10, right: 15)
         stack.isLayoutMarginsRelativeArrangement = true
+        stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .horizontal
         return stack
     }()
@@ -30,6 +32,7 @@ class CityChangeButtons: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        configureViews()
     }
 
     @objc private func backButtonTapped() {
