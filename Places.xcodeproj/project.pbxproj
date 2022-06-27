@@ -18,6 +18,7 @@
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
 		C24A9F8E285D128F002A4425 /* PlacesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */; };
 		F8843175C8F63E5329EF20A7 /* UIViewController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843DABA4D0F20B5F8F6130 /* UIViewController+ext.swift */; };
+		F88433F1BDEA9E53765E2B3E /* EditCityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884346EE1CFE36DD4AD5391 /* EditCityViewController.swift */; };
 		F8843470C321C4916557F492 /* UIView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432CB712A420FD3CEF230 /* UIView+ext.swift */; };
 		F88438A806A006637F6470BB /* CitiesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88438C643194F8660E82B29 /* CitiesModel.swift */; };
 		F8843906ED2B53D7E60BD3E8 /* CityChangeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884334FC500485159AF6013 /* CityChangeButton.swift */; };
@@ -44,6 +45,7 @@
 		F88432CB712A420FD3CEF230 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		F88432F4670005B7ACE2625D /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		F884334FC500485159AF6013 /* CityChangeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityChangeButton.swift; sourceTree = "<group>"; };
+		F884346EE1CFE36DD4AD5391 /* EditCityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditCityViewController.swift; sourceTree = "<group>"; };
 		F88437DAA0ECD38339B38828 /* UIStackView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+ext.swift"; sourceTree = "<group>"; };
 		F88438C643194F8660E82B29 /* CitiesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitiesModel.swift; sourceTree = "<group>"; };
 		F8843BB9D2815D2DC8034A6A /* PlacesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesProvider.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				F88432F4670005B7ACE2625D /* MasterViewController.swift */,
 				615B46A9874A715354269774 /* MapView */,
 				615B4E1B4F62CBEC7BA9B52F /* TableView */,
+				F8843D50264DBB76F6BF08E8 /* EditCityView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -201,6 +204,14 @@
 				F8843DABA4D0F20B5F8F6130 /* UIViewController+ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		F8843D50264DBB76F6BF08E8 /* EditCityView */ = {
+			isa = PBXGroup;
+			children = (
+				F884346EE1CFE36DD4AD5391 /* EditCityViewController.swift */,
+			);
+			path = EditCityView;
 			sourceTree = "<group>";
 		};
 		F8843F6800CFD1ED931328D1 /* CityChangeButton */ = {
@@ -290,6 +301,7 @@
 				615B4E757566C8E452CEBCCD /* CoreDataStack.swift in Sources */,
 				F8843B0576C449FE111FAB2C /* PlacesProvider.swift in Sources */,
 				F8843906ED2B53D7E60BD3E8 /* CityChangeButton.swift in Sources */,
+				F88433F1BDEA9E53765E2B3E /* EditCityViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

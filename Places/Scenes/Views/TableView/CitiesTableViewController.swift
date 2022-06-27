@@ -62,9 +62,11 @@ extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource 
         45
     }
 
-
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let editCityViewController = EditCityViewController(viewModel: viewModel, atIndex: indexPath.section)
+        navigationController?.pushViewController(editCityViewController, animated: true)
     }
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

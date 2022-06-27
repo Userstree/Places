@@ -28,6 +28,11 @@ class MasterViewController: UIViewController {
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isCitiesTableViewEnabled = false
+    }
+
     private lazy var mapViewController = MapViewController(viewModel: viewModel)
 
     private lazy var citiesTableViewController = CitiesTableViewController(viewModel: viewModel)

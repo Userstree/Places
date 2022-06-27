@@ -22,6 +22,4 @@ extension CityChangeable where Self: UIButton {
     }
 }
 
-internal class TransitionButton: UIButton, CityChangeable { }
-
-internal class CityChangeButton: UIButton, CityChangeable { }
+extension UIButton: CityChangeable { }

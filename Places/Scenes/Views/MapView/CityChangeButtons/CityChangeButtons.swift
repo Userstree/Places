@@ -7,13 +7,13 @@ import UIKit
 class CityChangeButtons: UIViewController {
 
     private lazy var backButton: UIButton = {
-        let button = CityChangeButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
+        let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var forwardButton: UIButton = {
-        let button = CityChangeButton().makeButton(withImage: UIImage(systemName: "arrow.forward")!)
+        let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.forward")!)
         button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
         return button
     }()
