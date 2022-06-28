@@ -77,7 +77,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
             print(coordinate)
             //Now use this coordinate to add annotation on map.
-            var annotation = MKPointAnnotation()
+            let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             //Set title and subtitle if you want
             annotation.title = "Title"
@@ -86,25 +86,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
             presentAddPlaceActivity()
         }
     }
-
-//    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-//        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
-//            return
-//        }
-//        else if gestureRecognizer.state != UIGestureRecognizer.State.began {
-//
-//            let touchPoint = gestureRecognizer.location(in: mapView)
-//
-//            let touchMapCoordinate =  mapView.convert(touchPoint, toCoordinateFrom: mapView)
-//            yourAnnotation.subtitle = "You long pressed here"
-//            yourAnnotation.coordinate = touchMapCoordinate
-//            self._mapView.addAnnotation(yourAnnotation)
-//        }
-//    }
-
-//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-//
-//    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

@@ -14,7 +14,7 @@ extension AddPlaceActivityProtocol where Self: UIViewController {
 
         alertController.addTextField { field in
             field.placeholder = "Type city"
-            field.delegate = alertController
+            field.delegate = self
         }
 
         alertController.addTextField { field in
