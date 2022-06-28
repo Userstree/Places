@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private var viewModel: CitiesViewModel
 
@@ -24,7 +24,6 @@ class MapViewController: UIViewController {
     }
 
     private lazy var backwardButton: UIButton = {
-
         let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
@@ -60,7 +59,47 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
 
         configureViews()
+        longPressGesture()
     }
+
+    private func longPressGesture() {
+        let longPressGestureRec = UILongPressGestureRecognizer(target: self,
+                action:#selector(addAnnotationOnLongPress(gesture:)))
+        longPressGestureRec.minimumPressDuration = 0.7
+        longPressGestureRec.delaysTouchesBegan = true
+        longPressGestureRec.delegate = self
+        mapView.addGestureRecognizer(longPressGestureRec)
+    }
+    @objc func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
+
+        if gesture.state == .ended {
+            let point = gesture.location(in: mapView)
+            let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+            print(coordinate)
+            //Now use this coordinate to add annotation on map.
+            var annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            //Set title and subtitle if you want
+            annotation.title = "Title"
+            annotation.subtitle = "subtitle"
+            mapView.addAnnotation(annotation)
+        }
+    }
+
+//    @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
+//        if gestureRecognizer.state != UIGestureRecognizer.State.ended {
+//            return
+//        }
+//        else if gestureRecognizer.state != UIGestureRecognizer.State.began {
+//
+//            let touchPoint = gestureRecognizer.location(in: mapView)
+//
+//            let touchMapCoordinate =  mapView.convert(touchPoint, toCoordinateFrom: mapView)
+//            yourAnnotation.subtitle = "You long pressed here"
+//            yourAnnotation.coordinate = touchMapCoordinate
+//            self._mapView.addAnnotation(yourAnnotation)
+//        }
+//    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -115,6 +154,13 @@ class MapViewController: UIViewController {
         }
     }
 
+    func setPinUsingMKPlacemark(location: CLLocationCoordinate2D) {
+        let pin = MKPlacemark(coordinate: location)
+        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
+        mapView.setRegion(coordinateRegion, animated: true)
+        mapView.addAnnotation(pin)
+    }
+
     private func configureViews() {
         [mapView, mapModeSegmentedControl, backwardButton, forwardButton].forEach(view.addSubview)
         makeConstraints()
@@ -142,6 +188,7 @@ class MapViewController: UIViewController {
         ])
     }
 }
+
 
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 }

@@ -46,7 +46,7 @@ class MasterViewController: UIViewController {
 
     private func configureNavigationBar() {
         title = "red"
-        navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.2)
+        navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
 
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities

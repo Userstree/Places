@@ -12,8 +12,10 @@
 		615B450556AF4BF2B4FEBE12 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 615B45B0788AEA163793F1FF /* Assets.xcassets */; };
 		615B45E1811BE7575903861D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B46BB7C1627B5B09D1E64 /* MapViewController.swift */; };
 		615B480A4AD045E00F9D5D9D /* CitiesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4702DA7257BE4EE431ED /* CitiesTableViewController.swift */; };
+		615B4A76C37C09BAFEF1F041 /* AddPlaceActivityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */; };
 		615B4AF3BB801BA37D7225DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4F69F6361070D4A49255 /* AppDelegate.swift */; };
 		615B4E757566C8E452CEBCCD /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B410A1DDC011C1495B0B1 /* CoreDataStack.swift */; };
+		615B4E99707AD6AA52CF1113 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B43849356DCEF41FA0DEC /* MapPin.swift */; };
 		615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */; };
 		C23A6735285DA861007822F5 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C23A6734285DA861007822F5 /* MapKit.framework */; };
 		C24A9F8E285D128F002A4425 /* PlacesModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */; };
@@ -31,6 +33,7 @@
 
 /* Begin PBXFileReference section */
 		615B410A1DDC011C1495B0B1 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		615B43849356DCEF41FA0DEC /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		615B45B0788AEA163793F1FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		615B46BB7C1627B5B09D1E64 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		615B46C83EA1A10F742365BE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.info; path = Info.plist; sourceTree = "<group>"; };
@@ -39,6 +42,7 @@
 		615B482B3834A3A006C7592F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		615B4B88947AD9F8876BA566 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceActivityProtocol.swift; sourceTree = "<group>"; };
 		615B4F69F6361070D4A49255 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C23A6734285DA861007822F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		C24A9F8D285D128F002A4425 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -91,6 +95,14 @@
 			path = CityTableViewCell;
 			sourceTree = "<group>";
 		};
+		615B43EE0026EB224608A24B /* MapPin */ = {
+			isa = PBXGroup;
+			children = (
+				615B43849356DCEF41FA0DEC /* MapPin.swift */,
+			);
+			path = MapPin;
+			sourceTree = "<group>";
+		};
 		615B44F3DE013FB347033C1D /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +122,7 @@
 				C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */,
 				F88437E17A6946A36653CE22 /* Extensions */,
 				615B40364C96D806F109D440 /* CoreData */,
+				615B4DCE541D4C4AC722DBD0 /* Helpers */,
 			);
 			path = Places;
 			sourceTree = "<group>";
@@ -128,6 +141,7 @@
 			children = (
 				615B46BB7C1627B5B09D1E64 /* MapViewController.swift */,
 				F8843F6800CFD1ED931328D1 /* CityChangeButton */,
+				615B43EE0026EB224608A24B /* MapPin */,
 			);
 			path = MapView;
 			sourceTree = "<group>";
@@ -149,6 +163,14 @@
 				F884378DBDAC41359CF0992D /* ViewModels */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		615B4DCE541D4C4AC722DBD0 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		615B4E1B4F62CBEC7BA9B52F /* TableView */ = {
@@ -302,6 +324,8 @@
 				F8843B0576C449FE111FAB2C /* PlacesProvider.swift in Sources */,
 				F8843906ED2B53D7E60BD3E8 /* CityChangeButton.swift in Sources */,
 				F88433F1BDEA9E53765E2B3E /* EditCityViewController.swift in Sources */,
+				615B4A76C37C09BAFEF1F041 /* AddPlaceActivityProtocol.swift in Sources */,
+				615B4E99707AD6AA52CF1113 /* MapPin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
