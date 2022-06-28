@@ -6,9 +6,9 @@ import UIKit
 
 class CitiesTableViewController: UIViewController {
 
-    private var viewModel: CitiesViewModel
+    private var viewModel: PointsViewModel
 
-    init(viewModel: CitiesViewModel) {
+    init(viewModel: PointsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -51,7 +51,7 @@ class CitiesTableViewController: UIViewController {
 extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource {
 
     public func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.getCitiesList().count
+        viewModel.pointsModel.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,7 +71,7 @@ extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource 
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.removeCity(city: viewModel.getCitiesList()[indexPath.section])
+            viewModel.removePoint(point: viewModel.pointsModel[indexPath.section])
             tableView.reloadData()
         }
     }
@@ -79,7 +79,7 @@ extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
                                                     for: indexPath) as! CityTableViewCell
-        cell.configure(with: viewModel.getCitiesList()[indexPath.section])
+        cell.configure(with: viewModel.pointsModel[indexPath.section] )
         return cell
     }
 }

@@ -1,20 +1,31 @@
-//
-//  ViewController.swift
-//  Places
-//
-//  Created by Dossymkhan Zhulamanov on 18.06.2022.
-//
-//
-
 import UIKit
 import MapKit
 import CoreLocation
 
+protocol MapViewControllerDelegate: AnyObject {
+    func locationIndexDidChange(_ index: Int)
+}
+
 class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlaceActivityProtocol {
 
-    private var viewModel: CitiesViewModel
+    weak var delegate: MapViewControllerDelegate?
 
-    init(viewModel: CitiesViewModel) {
+    var locationIndex = 0 {
+        didSet {
+            if locationIndex > viewModel.pointsModel.count - 1 {
+                locationIndex = 0
+            }
+            if locationIndex < 0 {
+                locationIndex = viewModel.pointsModel.count - 1
+            }
+            render(viewModel.pointsModel[locationIndex].coordinate)
+            delegate?.locationIndexDidChange(locationIndex)
+        }
+    }
+
+    private var viewModel: PointsViewModel
+
+    init(viewModel: PointsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -52,12 +63,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
+        map.addAnnotations(viewModel.pointsModel)
         return map
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        manager.delegate = self
         configureViews()
         longPressGesture()
     }
@@ -75,11 +88,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
         if gesture.state == .ended {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-            print(coordinate)
-            //Now use this coordinate to add annotation on map.
             let annotation = MKPointAnnotation()
+
             annotation.coordinate = coordinate
-            //Set title and subtitle if you want
             annotation.title = "Title"
             annotation.subtitle = "subtitle"
             mapView.addAnnotation(annotation)
@@ -97,19 +108,16 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-
-        let cities = viewModel.getCitiesList()
-        if let city = cities.first {
+        let points = viewModel.pointsModel
+        if let point = points.first {
             manager.stopUpdatingLocation()
-
-            render(city.coordinates)
+            render(point.coordinate)
         }
     }
 
-    private func render(_ location: CLLocation) {
-
-        let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude,
-                longitude: location.coordinate.longitude)
+    private func render(_ location: CLLocationCoordinate2D) {
+        let coordinate = CLLocationCoordinate2D(latitude: location.latitude,
+                longitude: location.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
@@ -120,11 +128,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 
     @objc private func backButtonTapped() {
-        print("go back")
+        locationIndex -= 1
     }
 
     @objc private func forwardButtonTapped() {
-        print("go forward")
+        locationIndex += 1
     }
 
     @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
@@ -138,13 +146,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
             mapView.mapType = .hybrid
             mapModeSegmentedControl.backgroundColor = .white
         }
-    }
-
-    func setPinUsingMKPlacemark(location: CLLocationCoordinate2D) {
-        let pin = MKPlacemark(coordinate: location)
-        let coordinateRegion = MKCoordinateRegion(center: pin.coordinate, latitudinalMeters: 800, longitudinalMeters: 800)
-        mapView.setRegion(coordinateRegion, animated: true)
-        mapView.addAnnotation(pin)
     }
 
     private func configureViews() {
@@ -177,4 +178,26 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
 
 
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is Point else {
+            return nil
+        }
+        let identifier = "Point"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        if annotationView == nil {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = true
+            annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+        } else {
+            annotationView?.annotation = annotation
+        }
+
+        return annotationView
+    }
+
+    public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let editVC = EditCityViewController(viewModel: viewModel, atIndex: 0)
+        navigationController?.pushViewController(editVC, animated: true)
+    }
 }

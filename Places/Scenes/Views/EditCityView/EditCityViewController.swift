@@ -6,22 +6,22 @@ import UIKit
 
 class EditCityViewController: UIViewController {
 
-    private var viewModel: CitiesViewModel
+    private var viewModel: PointsViewModel
 
-    init(viewModel: CitiesViewModel, atIndex: Int) {
+    init(viewModel: PointsViewModel, atIndex: Int) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
 
-        print("\(viewModel.getCitiesList()[atIndex].cityName)")
-        cityNameTextField.placeholder = "\(viewModel.getCitiesList()[atIndex].cityName)"
-        cityPlaceTextField.placeholder = "\(viewModel.getCitiesList()[atIndex].cityPlace)"
+        print("\(viewModel.pointsModel[atIndex].title)")
+        pointNameTextField.placeholder = "\(viewModel.pointsModel[atIndex].title!)"
+        pointDetailsTextField.placeholder = "\(viewModel.pointsModel[atIndex].details)"
     }
 
     required init?(coder: NSCoder) {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-    private lazy var cityNameTextField: UITextField = {
+    private lazy var pointNameTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.placeholder = "CityName"
@@ -30,7 +30,7 @@ class EditCityViewController: UIViewController {
         return textField
     }()
 
-    private lazy var cityPlaceTextField: UITextField = {
+    private lazy var pointDetailsTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.setContentHuggingPriority(.defaultLow, for: .vertical)
@@ -40,7 +40,7 @@ class EditCityViewController: UIViewController {
     }()
 
     private lazy var mainVStack: UIStackView = {
-        let stack = UIStackView(viewElements: [cityNameTextField, cityPlaceTextField])
+        let stack = UIStackView(viewElements: [pointNameTextField, pointDetailsTextField])
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.alignment = .fill
         stack.distribution = .equalCentering

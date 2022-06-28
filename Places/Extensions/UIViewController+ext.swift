@@ -23,3 +23,9 @@ import UIKit
         removeFromParent()
     }
 }
+
+extension UIViewController: UINavigationBarDelegate {
+    public func position(for bar: UIBarPositioning) -> UIBarPosition {
+        .topAttached
+    }
+}

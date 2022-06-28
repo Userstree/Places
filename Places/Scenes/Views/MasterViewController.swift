@@ -6,9 +6,9 @@ import UIKit
 
 class MasterViewController: UIViewController {
 
-    private var viewModel: CitiesViewModel
+    private var viewModel: PointsViewModel
 
-    init(viewModel: CitiesViewModel) {
+    init(viewModel: PointsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -40,12 +40,13 @@ class MasterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        mapViewController.delegate = self
         configureNavigationBar()
         setupChildViewControllers()
     }
 
     private func configureNavigationBar() {
-        title = "red"
+        title = viewModel.pointsModel[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
 
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
@@ -58,5 +59,11 @@ class MasterViewController: UIViewController {
 
     private func setupChildViewControllers() {
         add(mapViewController, frame: self.view.frame)
+    }
+}
+
+extension MasterViewController: MapViewControllerDelegate {
+    func locationIndexDidChange(_ index: Int) {
+        title = viewModel.pointsModel[index].title
     }
 }

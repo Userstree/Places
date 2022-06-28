@@ -18,7 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         let factory: FactoryProtocol = Factory()
-        window.rootViewController = UINavigationController(rootViewController: factory.make())
+        let navController = UINavigationController(rootViewController: factory.make())
+        
+        window.rootViewController = navController
         window.makeKeyAndVisible()
         self.window = window
     }

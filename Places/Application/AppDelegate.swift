@@ -22,8 +22,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
-    return true
+        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = UIColor.clear
+        appearance.backgroundEffect = UIBlurEffect(style: .light) // or dark
+        
+        let scrollingAppearance = UINavigationBarAppearance()
+        scrollingAppearance.configureWithTransparentBackground()
+        scrollingAppearance.backgroundColor = .white // your view (superview) color
+        
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = scrollingAppearance
+        UINavigationBar.appearance().compactAppearance = scrollingAppearance
+        return true
     }
 
 

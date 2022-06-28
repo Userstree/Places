@@ -37,10 +37,10 @@ class CityTableViewCell: UITableViewCell {
         configureViews()
     }
 
-    func configure(with model: CityTableViewCellDataSource) {
-        cityNameLabel.text = model.cityName
-        let latitude = String(format: "Lat: %.2f", model.coordinates.coordinate.latitude)
-        let longitude = String(format: "Lon: %.2f", model.coordinates.coordinate.longitude)
+    func configure(with model: PointsTableViewCellDataSource) {
+        cityNameLabel.text = model.title
+        let latitude = String(format: "Lat: %.2f", model.coordinate.latitude)
+        let longitude = String(format: "Lon: %.2f", model.coordinate.longitude)
         cityLocationLabel.text = "\(latitude)\t&\t\(longitude) "
     }
 
