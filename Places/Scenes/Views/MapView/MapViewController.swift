@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class MapViewController: UIViewController, UIGestureRecognizerDelegate {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlaceActivityProtocol {
 
     private var viewModel: CitiesViewModel
 
@@ -64,14 +64,14 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
 
     private func longPressGesture() {
         let longPressGestureRec = UILongPressGestureRecognizer(target: self,
-                action:#selector(addAnnotationOnLongPress(gesture:)))
+                action: #selector(addAnnotationOnLongPress(gesture:)))
         longPressGestureRec.minimumPressDuration = 0.7
         longPressGestureRec.delaysTouchesBegan = true
         longPressGestureRec.delegate = self
         mapView.addGestureRecognizer(longPressGestureRec)
     }
-    @objc func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
 
+    @objc func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .ended {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
@@ -83,6 +83,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
             annotation.title = "Title"
             annotation.subtitle = "subtitle"
             mapView.addAnnotation(annotation)
+            presentAddPlaceActivity()
         }
     }
 
@@ -99,6 +100,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
 //            yourAnnotation.coordinate = touchMapCoordinate
 //            self._mapView.addAnnotation(yourAnnotation)
 //        }
+//    }
+
+//    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+//
 //    }
 
     override func viewDidAppear(_ animated: Bool) {

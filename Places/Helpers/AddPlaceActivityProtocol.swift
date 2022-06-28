@@ -10,17 +10,27 @@ protocol AddPlaceActivityProtocol {
 
 extension AddPlaceActivityProtocol where Self: UIViewController {
     func presentAddPlaceActivity() {
-        let alert = UIAlertController(title: "Add Place",message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Add Place",message: nil, preferredStyle: .alert)
 
-        alert.addTextField { field in
+        alertController.addTextField { field in
             field.placeholder = "Type city"
+            field.delegate = alertController
         }
 
-        alert.addTextField { field in
+        alertController.addTextField { field in
             field.placeholder = "Type name of the place"
         }
 
-        alert.addAction(.init(title: "Add", style: .cancel))
-        present(alert, animated: true, completion: nil)
+        let addAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
+            let firstTextField = alertController.textFields![0] as UITextField
+            let secondTextField = alertController.textFields![1] as UITextField
+            print("firstName \(firstTextField.text), secondName \(secondTextField.text)")
+        })
+
+        alertController.addAction(addAction)
+        alertController.view.addSubview(UIView())
+        present(alertController, animated: false)
     }
 }
+
+extension UIAlertController: UITextFieldDelegate {  }

@@ -4,7 +4,7 @@
 
 import UIKit
 
-@nonobjc extension UIViewController {
+@nonobjc extension UIViewController: UITextFieldDelegate {
 
     func add(_ child: UIViewController, frame: CGRect? = nil) {
         addChild(child)
