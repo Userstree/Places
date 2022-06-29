@@ -20,9 +20,9 @@ class MasterViewController: UIViewController {
     private var isCitiesTableViewEnabled: Bool = false {
         didSet {
             if isCitiesTableViewEnabled {
-                add(citiesTableViewController, frame: view.frame)
+                add(placesTableViewController, frame: view.frame)
             } else {
-                citiesTableViewController.remove()
+                placesTableViewController.remove()
                 add(mapViewController, frame: view.frame)
             }
         }
@@ -35,11 +35,12 @@ class MasterViewController: UIViewController {
 
     private lazy var mapViewController = MapViewController(viewModel: viewModel)
 
-    private lazy var citiesTableViewController = CitiesTableViewController(viewModel: viewModel)
+    private lazy var placesTableViewController = PlacesTableViewController(viewModel: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        placesTableViewController.delegate = self
         mapViewController.delegate = self
         configureNavigationBar()
         setupChildViewControllers()
@@ -48,7 +49,6 @@ class MasterViewController: UIViewController {
     private func configureNavigationBar() {
         title = viewModel.pointsModel[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
-
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities
     }
@@ -65,5 +65,12 @@ class MasterViewController: UIViewController {
 extension MasterViewController: MapViewControllerDelegate {
     func locationIndexDidChange(_ index: Int) {
         title = viewModel.pointsModel[index].title
+    }
+}
+
+extension MasterViewController: PlacesTableViewControllerDelegate {
+    func didSelectItemAt(_ index: Int) {
+        mapViewController.locationIndex = index
+        isCitiesTableViewEnabled = !isCitiesTableViewEnabled
     }
 }

@@ -8,6 +8,7 @@ class CityChangeButtons: UIViewController {
 
     private lazy var backButton: UIButton = {
         let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
+
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()

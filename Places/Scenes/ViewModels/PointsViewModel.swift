@@ -4,6 +4,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 protocol PointsViewModel {
     var pointsModel: [Point] { get }
@@ -16,6 +17,8 @@ protocol PointsViewModel {
 typealias PointsCallback = () -> ()
 
 final class DefaultPointsViewModel: PointsViewModel {
+
+    var points = [NSManagedObject]()
 
     var updateLocation: PointsCallback?
 

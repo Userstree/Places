@@ -21,64 +21,52 @@ class EditCityViewController: UIViewController {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-    private lazy var pointNameTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.placeholder = "CityName"
-        textField.setContentHuggingPriority(.defaultHigh, for: .vertical)
-        textField.backgroundColor = .white
-        return textField
-    }()
+    private var pointNameTextField = CustomTextField(placeholder: "CityName")
 
-    private lazy var pointDetailsTextField: UITextField = {
-        let textField = UITextField()
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.setContentHuggingPriority(.defaultLow, for: .vertical)
-        textField.placeholder = "CityLocation"
-        textField.backgroundColor = .white
-        return textField
-    }()
-
-    private lazy var mainVStack: UIStackView = {
-        let stack = UIStackView(viewElements: [pointNameTextField, pointDetailsTextField])
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.alignment = .fill
-        stack.distribution = .equalCentering
-        stack.backgroundColor = .green
-        return stack
-    }()
+    private var pointDetailsTextField = CustomTextField(placeholder: "CityLocation")
 
     private func configureNavBar() {
         title = "Edit"
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.2)
 
         let doneNavItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneNavBarItemTapped) )
+        let cancelNavItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNavBarItemTapped))
         navigationItem.rightBarButtonItem = doneNavItem
+        navigationItem.leftBarButtonItem = cancelNavItem
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .systemCyan
+        view.backgroundColor = .systemBackground
         configureNavBar()
         configureViews()
     }
 
     @objc private func doneNavBarItemTapped() {
-        navigationController?.popToRootViewController(animated: true)
+        dismiss(animated: true)
+    }
+
+    @objc private func cancelNavBarItemTapped() {
+        dismiss(animated: true)
     }
 
     private func configureViews() {
-        view.addSubview(mainVStack)
+        [pointNameTextField, pointDetailsTextField].forEach(view.addSubview)
         makeConstraints()
     }
 
     private func makeConstraints() {
         NSLayoutConstraint.activate([
-            mainVStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
-            mainVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 45),
-            mainVStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -45),
-            mainVStack.heightAnchor.constraint(equalToConstant: 105),
+            pointNameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            pointNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            pointNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            pointNameTextField.heightAnchor.constraint(equalToConstant: 25),
+
+            pointDetailsTextField.topAnchor.constraint(equalTo: pointNameTextField.bottomAnchor, constant: 20),
+            pointDetailsTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            pointDetailsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            pointDetailsTextField.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
 }

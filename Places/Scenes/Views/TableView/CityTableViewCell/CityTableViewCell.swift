@@ -3,29 +3,27 @@
 //
 
 import UIKit
-import MapKit
-
 
 class CityTableViewCell: UITableViewCell {
 
     static let identifier = "CityTableViewCell"
 
-    private var cityNameLabel: UILabel = {
+    private var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
 
-    private var cityLocationLabel: UILabel = {
+    private var detailsLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
         return label
     }()
 
     private lazy var mainVStack: UIStackView = {
-        let stack = UIStackView(viewElements: [cityNameLabel, cityLocationLabel])
+        let stack = UIStackView(viewElements: [titleLabel, detailsLabel])
         stack.backgroundColor = .clear
         stack.alignment = .fill
         return stack
@@ -38,10 +36,8 @@ class CityTableViewCell: UITableViewCell {
     }
 
     func configure(with model: PointsTableViewCellDataSource) {
-        cityNameLabel.text = model.title
-        let latitude = String(format: "Lat: %.2f", model.coordinate.latitude)
-        let longitude = String(format: "Lon: %.2f", model.coordinate.longitude)
-        cityLocationLabel.text = "\(latitude)\t&\t\(longitude) "
+        titleLabel.text = model.title
+        detailsLabel.text = "\(model.details)"
     }
 
     private func configureViews() {
@@ -53,7 +49,7 @@ class CityTableViewCell: UITableViewCell {
     private func makeConstraints() {
         NSLayoutConstraint.activate([
             mainVStack.topAnchor.constraint(equalTo: contentView.topAnchor),
-            mainVStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            mainVStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             mainVStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             mainVStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])

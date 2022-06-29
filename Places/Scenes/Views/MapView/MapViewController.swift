@@ -35,15 +35,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 
     private lazy var backwardButton: UIButton = {
-        let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.backward")!)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = ChangeLocationButton(image: UIImage(systemName: "arrow.backward")!)
         button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         return button
     }()
 
     private lazy var forwardButton: UIButton = {
-        let button = UIButton().makeButton(withImage: UIImage(systemName: "arrow.forward")!)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        let button = ChangeLocationButton(image: UIImage(systemName: "arrow.forward")!)
         button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -91,8 +89,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
             let annotation = MKPointAnnotation()
 
             annotation.coordinate = coordinate
-            annotation.title = "Title"
-            annotation.subtitle = "subtitle"
             mapView.addAnnotation(annotation)
             presentAddPlaceActivity()
         }
@@ -176,7 +172,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 }
 
-
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is Point else {
@@ -198,6 +193,10 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         let editVC = EditCityViewController(viewModel: viewModel, atIndex: 0)
-        navigationController?.pushViewController(editVC, animated: true)
+        let navigationController = UINavigationController(rootViewController: editVC)
+        if let sheet = navigationController.sheetPresentationController {
+            sheet.detents = [.medium()]
+        }
+        present(navigationController, animated: true)
     }
 }

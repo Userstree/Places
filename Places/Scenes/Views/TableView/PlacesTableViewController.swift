@@ -4,7 +4,13 @@
 
 import UIKit
 
-class CitiesTableViewController: UIViewController {
+protocol PlacesTableViewControllerDelegate: AnyObject {
+    func didSelectItemAt(_ index: Int)
+}
+
+class PlacesTableViewController: UIViewController {
+
+    weak var delegate: PlacesTableViewControllerDelegate?
 
     private var viewModel: PointsViewModel
 
@@ -20,7 +26,7 @@ class CitiesTableViewController: UIViewController {
     private lazy var citiesTableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.backgroundColor = .gray.withAlphaComponent(0.4)
+        tableView.backgroundColor = .gray.withAlphaComponent(0.7)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(CityTableViewCell.self, forCellReuseIdentifier: CityTableViewCell.identifier)
@@ -48,7 +54,7 @@ class CitiesTableViewController: UIViewController {
     }
 }
 
-extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource {
+extension PlacesTableViewController: UITableViewDelegate, UITableViewDataSource {
 
     public func numberOfSections(in tableView: UITableView) -> Int {
         viewModel.pointsModel.count
@@ -62,11 +68,13 @@ extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource 
         45
     }
 
+    public func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        2
+    }
+
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-        let editCityViewController = EditCityViewController(viewModel: viewModel, atIndex: indexPath.section)
-        navigationController?.pushViewController(editCityViewController, animated: true)
+        delegate?.didSelectItemAt(indexPath.section)
     }
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -76,10 +84,18 @@ extension CitiesTableViewController: UITableViewDelegate, UITableViewDataSource 
         }
     }
 
+    public func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = .clear
+        return headerView
+    }
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
                                                     for: indexPath) as! CityTableViewCell
         cell.configure(with: viewModel.pointsModel[indexPath.section] )
+        cell.backgroundColor = .systemBackground
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
 }
