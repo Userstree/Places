@@ -192,7 +192,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let editVC = EditCityViewController(viewModel: viewModel, atIndex: 0)
+        let editVC = EditCityViewController(viewModel: viewModel, index: locationIndex)
         let navigationController = UINavigationController(rootViewController: editVC)
         if let sheet = navigationController.sheetPresentationController {
             sheet.detents = [.medium()]

@@ -46,6 +46,14 @@ class MasterViewController: UIViewController {
         setupChildViewControllers()
     }
 
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        viewModel.updateLocationCallback = { [weak self] title in
+            guard let self = self else { return }
+            self.title = title
+        }
+    }
+
     private func configureNavigationBar() {
         title = viewModel.pointsModel[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
