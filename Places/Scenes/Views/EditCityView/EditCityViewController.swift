@@ -18,7 +18,6 @@ class EditCityViewController: UIViewController {
         self.index = index
         super.init(nibName: nil, bundle: nil)
 
-        print("\(viewModel.pointsModel[index].title)")
         pointNameTextField.placeholder = "\(viewModel.pointsModel[index].title!)"
         pointDetailsTextField.placeholder = "\(viewModel.pointsModel[index].details)"
     }
@@ -50,7 +49,6 @@ class EditCityViewController: UIViewController {
     }
 
     @objc private func doneNavBarItemTapped() {
-        print("nameTextfield ", pointNameTextField.text)
         viewModel.changePointInfo(title: pointNameTextField.text, details: pointDetailsTextField.text, index: index)
         dismiss(animated: true)
     }

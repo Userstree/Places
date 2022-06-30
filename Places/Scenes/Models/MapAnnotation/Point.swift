@@ -21,4 +21,6 @@ class Point: NSObject, MKAnnotation, PointsTableViewCellDataSource {
         self.coordinate = coordinate
         self.details = details
     }
+
+    static let identifier = "Point"
 }

@@ -86,11 +86,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
         if gesture.state == .ended {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-            let annotation = MKPointAnnotation()
-
-            annotation.coordinate = coordinate
-            mapView.addAnnotation(annotation)
-            presentAddPlaceActivity()
+            presentAddPlaceActivity { title, details in
+                let annotation = Point(title: title, details: details, coordinate: coordinate)
+                self.mapView.addAnnotation(annotation)
+            }
         }
     }
 
@@ -177,17 +176,17 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         guard annotation is Point else {
             return nil
         }
-        let identifier = "Point"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Point.identifier)
 
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Point.identifier)
             annotationView?.canShowCallout = true
+            annotationView?.loadCustomLines(customLines: [viewModel.pointsModel[locationIndex].details])
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView?.annotation = annotation
         }
-
         return annotationView
     }
 
