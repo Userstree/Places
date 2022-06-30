@@ -39,6 +39,7 @@
 /* Begin PBXFileReference section */
 		615B40B4F4D30CDA1BFAD80E /* Point.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		615B410A1DDC011C1495B0B1 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		615B429A54B728534A622163 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		615B43849356DCEF41FA0DEC /* MapPin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapPin.swift; sourceTree = "<group>"; };
 		615B45B0788AEA163793F1FF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		615B46BB7C1627B5B09D1E64 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -53,7 +54,6 @@
 		615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceActivityProtocol.swift; sourceTree = "<group>"; };
 		615B4F69F6361070D4A49255 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C23A6734285DA861007822F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		C24A9F8D285D128F002A4425 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		F88432857E9E4164D9EEC1E6 /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		F88432CB712A420FD3CEF230 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		F88432F4670005B7ACE2625D /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -87,6 +87,7 @@
 				F8843BB9D2815D2DC8034A6A /* PlacesProvider.swift */,
 				615B4BC83277D4FD10B8EC54 /* Places+CoreDataClass.swift */,
 				615B4CD387DC03117C31C612 /* Places+CoreDataProperties.swift */,
+				615B429A54B728534A622163 /* Model.xcdatamodel */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -556,9 +557,7 @@
 		C24A9F8C285D128F002A4425 /* PlacesModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C24A9F8D285D128F002A4425 /* Model.xcdatamodel */,
 			);
-			currentVersion = C24A9F8D285D128F002A4425 /* Model.xcdatamodel */;
 			path = PlacesModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
