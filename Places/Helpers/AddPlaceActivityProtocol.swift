@@ -32,4 +32,3 @@ extension AddPlaceActivityProtocol where Self: UIViewController {
     }
 }
 
-//extension UIAlertController: UITextFieldDelegate {  }
