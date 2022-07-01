@@ -3,12 +3,19 @@
 //
 
 import UIKit
+import CoreData
 
-class MasterViewController: UIViewController {
+class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
-    private var viewModel: PointsViewModel
+//    lazy var dataProvider: PlacesProvider = {
+//        let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+//        let provider = PlacesProvider(with: managedContext, fetchedResultsControllerDelegate: self)
+//        return provider
+//    }()
 
-    init(viewModel: PointsViewModel) {
+    private var viewModel: LocationsViewModel
+
+    init(viewModel: LocationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,7 +42,7 @@ class MasterViewController: UIViewController {
 
     private lazy var mapViewController = MapViewController(viewModel: viewModel)
 
-    private lazy var placesTableViewController = PlacesTableViewController(viewModel: viewModel)
+    private lazy var placesTableViewController = LocationsTableViewController(viewModel: viewModel)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +62,7 @@ class MasterViewController: UIViewController {
     }
 
     private func configureNavigationBar() {
-        title = viewModel.pointsModel[mapViewController.locationIndex].title
+        title = viewModel.locationsModel[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities
@@ -72,11 +79,11 @@ class MasterViewController: UIViewController {
 
 extension MasterViewController: MapViewControllerDelegate {
     func locationIndexDidChange(_ index: Int) {
-        title = viewModel.pointsModel[index].title
+        title = viewModel.locationsModel[index].title
     }
 }
 
-extension MasterViewController: PlacesTableViewControllerDelegate {
+extension MasterViewController: LocationsTableViewControllerDelegate {
     func didSelectItemAt(_ index: Int) {
         mapViewController.locationIndex = index
         isCitiesTableViewEnabled = !isCitiesTableViewEnabled

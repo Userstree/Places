@@ -4,11 +4,11 @@
 
 import UIKit
 
-protocol AddPlaceActivityProtocol {
+protocol AddLocationActivityProtocol {
     func presentAddPlaceActivity(completion: @escaping (String, String) -> Void)
 }
 
-extension AddPlaceActivityProtocol where Self: UIViewController {
+extension AddLocationActivityProtocol where Self: UIViewController {
     func presentAddPlaceActivity(completion: @escaping (String, String) -> Void) {
         let alertController = UIAlertController(title: "Add Place",message: nil, preferredStyle: .alert)
 

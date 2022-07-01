@@ -4,22 +4,22 @@
 
 import UIKit
 
-class EditCityViewController: UIViewController {
+class EditLocationViewController: UIViewController {
 
-    private var viewModel: PointsViewModel {
+    private var viewModel: LocationsViewModel {
         didSet {
 
         }
     }
     private var index: Int
 
-    init(viewModel: PointsViewModel, index: Int) {
+    init(viewModel: LocationsViewModel, index: Int) {
         self.viewModel = viewModel
         self.index = index
         super.init(nibName: nil, bundle: nil)
 
-        pointNameTextField.placeholder = "\(viewModel.pointsModel[index].title!)"
-        pointDetailsTextField.placeholder = "\(viewModel.pointsModel[index].details)"
+        pointNameTextField.placeholder = "\(viewModel.locationsModel[index].title!)"
+        pointDetailsTextField.placeholder = "\(viewModel.locationsModel[index].details)"
     }
 
     required init?(coder: NSCoder) {
@@ -49,7 +49,7 @@ class EditCityViewController: UIViewController {
     }
 
     @objc private func doneNavBarItemTapped() {
-        viewModel.changePointInfo(title: pointNameTextField.text, details: pointDetailsTextField.text, index: index)
+        viewModel.changeLocationInfo(title: pointNameTextField.text, details: pointDetailsTextField.text, index: index)
         dismiss(animated: true)
     }
 

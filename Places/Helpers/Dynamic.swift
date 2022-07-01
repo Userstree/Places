@@ -14,11 +14,11 @@ class Dynamic<T> {
         didSet {
             for l in listeners { l(value) } }
     }
-    func bind(listener: Listener) {
+    func bind(listener: @escaping Listener) {
         listeners.append(listener)
         listener(value)
     }
-    func addListener(listener: Listener) {
+    func addListener(listener: @escaping Listener) {
         listeners.append(listener)
     }
 }

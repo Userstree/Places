@@ -12,7 +12,7 @@ import CoreData
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    lazy var coreDataStack: CoreDataStack = .init(modelName: "PlacesModel")
+//    lazy var coreDataStack: CoreDataStack = .init(modelName: "Location")
 
     static let sharedAppDelegate: AppDelegate = {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -23,13 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let appearance = UINavigationBarAppearance()
-//        appearance.configureWithTransparentBackground()
         appearance.backgroundColor = UIColor.clear
-        appearance.backgroundEffect = UIBlurEffect(style: .light) // or dark
+        appearance.backgroundEffect = UIBlurEffect(style: .light)
         
         let scrollingAppearance = UINavigationBarAppearance()
         scrollingAppearance.configureWithTransparentBackground()
-        scrollingAppearance.backgroundColor = .white // your view (superview) color
+        scrollingAppearance.backgroundColor = .white
         
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = scrollingAppearance

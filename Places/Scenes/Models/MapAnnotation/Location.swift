@@ -5,14 +5,13 @@
 import MapKit
 import UIKit
 
-protocol PointsTableViewCellDataSource {
+protocol LocationsTableViewCellDataSource {
     var title: String? { get set }
     var details: String { get set }
     var coordinate: CLLocationCoordinate2D { get set }
 }
 
-class Point: NSObject, MKAnnotation, PointsTableViewCellDataSource {
-    static let identifier = "Point"
+class Location: NSObject, MKAnnotation, LocationsTableViewCellDataSource {
     var title: String?
     var details: String
     var coordinate: CLLocationCoordinate2D

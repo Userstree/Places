@@ -6,26 +6,26 @@ protocol MapViewControllerDelegate: AnyObject {
     func locationIndexDidChange(_ index: Int)
 }
 
-class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlaceActivityProtocol {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocationActivityProtocol {
 
     weak var delegate: MapViewControllerDelegate?
 
     var locationIndex = 0 {
         didSet {
-            if locationIndex > viewModel.pointsModel.count - 1 {
+            if locationIndex > viewModel.locationsModel.count - 1 {
                 locationIndex = 0
             }
             if locationIndex < 0 {
-                locationIndex = viewModel.pointsModel.count - 1
+                locationIndex = viewModel.locationsModel.count - 1
             }
-            render(viewModel.pointsModel[locationIndex].coordinate)
+            render(viewModel.locationsModel[locationIndex].coordinate)
             delegate?.locationIndexDidChange(locationIndex)
         }
     }
 
-    private var viewModel: PointsViewModel
+    private var viewModel: LocationsViewModel
 
-    init(viewModel: PointsViewModel) {
+    init(viewModel: LocationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -61,7 +61,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
-        map.addAnnotations(viewModel.pointsModel)
+        map.addAnnotations(viewModel.locationsModel)
         return map
     }()
 
@@ -88,7 +88,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
             presentAddPlaceActivity { titleString, detailsString in
-                let annotation = Point(title: titleString,
+                let annotation = Location(title: titleString,
                                         details: detailsString,
                                         coordinate: coordinate)
                 self.mapView.addAnnotation(annotation)
@@ -106,7 +106,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let points = viewModel.pointsModel
+        let points = viewModel.locationsModel
         if let point = points.first {
             manager.stopUpdatingLocation()
             render(point.coordinate)
@@ -174,15 +174,15 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
 
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is Point else {
+        guard annotation is Location else {
             return nil
         }
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Point.identifier)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Location.identifier)
 
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Point.identifier)
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Location.identifier)
             annotationView?.canShowCallout = true
-            annotationView?.loadCustomLines(customLines: [viewModel.pointsModel[locationIndex].details])
+            annotationView?.loadCustomLines(customLines: [viewModel.locationsModel[locationIndex].details])
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView?.annotation = annotation
@@ -191,7 +191,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let editVC = EditCityViewController(viewModel: viewModel, index: locationIndex)
+        let editVC = EditLocationViewController(viewModel: viewModel, index: locationIndex)
         let navigationController = UINavigationController(rootViewController: editVC)
         if let sheet = navigationController.sheetPresentationController {
             sheet.detents = [.medium()]

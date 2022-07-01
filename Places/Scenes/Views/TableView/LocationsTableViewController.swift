@@ -4,17 +4,17 @@
 
 import UIKit
 
-protocol PlacesTableViewControllerDelegate: AnyObject {
+protocol LocationsTableViewControllerDelegate: AnyObject {
     func didSelectItemAt(_ index: Int)
 }
 
-class PlacesTableViewController: UIViewController {
+class LocationsTableViewController: UIViewController {
 
-    weak var delegate: PlacesTableViewControllerDelegate?
+    weak var delegate: LocationsTableViewControllerDelegate?
 
-    private var viewModel: PointsViewModel
+    private var viewModel: LocationsViewModel
 
-    init(viewModel: PointsViewModel) {
+    init(viewModel: LocationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -54,10 +54,10 @@ class PlacesTableViewController: UIViewController {
     }
 }
 
-extension PlacesTableViewController: UITableViewDelegate, UITableViewDataSource {
+extension LocationsTableViewController: UITableViewDelegate, UITableViewDataSource {
 
     public func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.pointsModel.count
+        viewModel.locationsModel.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,7 +79,7 @@ extension PlacesTableViewController: UITableViewDelegate, UITableViewDataSource 
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.removePoint(point: viewModel.pointsModel[indexPath.section])
+            viewModel.removeLocation(point: viewModel.locationsModel[indexPath.section])
             tableView.reloadData()
         }
     }
@@ -93,7 +93,7 @@ extension PlacesTableViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
                                                     for: indexPath) as! CityTableViewCell
-        cell.configure(with: viewModel.pointsModel[indexPath.section] )
+        cell.configure(with: viewModel.locationsModel[indexPath.section] )
         cell.backgroundColor = .systemBackground
         cell.accessoryType = .disclosureIndicator
         return cell

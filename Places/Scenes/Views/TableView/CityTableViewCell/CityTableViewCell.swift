@@ -35,7 +35,7 @@ class CityTableViewCell: UITableViewCell {
         configureViews()
     }
 
-    func configure(with model: PointsTableViewCellDataSource) {
+    func configure(with model: LocationsTableViewCellDataSource) {
         titleLabel.text = model.title
         detailsLabel.text = "\(model.details)"
     }
