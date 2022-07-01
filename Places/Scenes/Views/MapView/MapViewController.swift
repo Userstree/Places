@@ -86,11 +86,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
         if gesture.state == .ended {
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
-            let annotation = MKPointAnnotation()
 
-            annotation.coordinate = coordinate
-            mapView.addAnnotation(annotation)
-            presentAddPlaceActivity()
+            presentAddPlaceActivity { titleString, detailsString in
+                let annotation = Point(title: titleString,
+                                        details: detailsString,
+                                        coordinate: coordinate)
+                self.mapView.addAnnotation(annotation)
+            }
         }
     }
 
@@ -112,14 +114,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddPlace
     }
 
     private func render(_ location: CLLocationCoordinate2D) {
-        let coordinate = CLLocationCoordinate2D(latitude: location.latitude,
-                longitude: location.longitude)
         let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let region = MKCoordinateRegion(center: coordinate, span: span)
+        let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
 
         let pin = MKPointAnnotation()
-        pin.coordinate = coordinate
+        pin.coordinate = location
         mapView.addAnnotation(pin)
     }
 
@@ -177,17 +177,16 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         guard annotation is Point else {
             return nil
         }
-        let identifier = "Point"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: Point.identifier)
 
         if annotationView == nil {
-            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Point.identifier)
             annotationView?.canShowCallout = true
+            annotationView?.loadCustomLines(customLines: [viewModel.pointsModel[locationIndex].details])
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView?.annotation = annotation
         }
-
         return annotationView
     }
 

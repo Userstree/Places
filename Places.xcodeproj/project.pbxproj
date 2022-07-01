@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		615B40DAC9BEF6CD50BA1F14 /* CityTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4B88947AD9F8876BA566 /* CityTableViewCell.swift */; };
+		615B42DD60EAFDD8036AD44A /* MKAnnotationView+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B483BAECB2453F4B427BB /* MKAnnotationView+ext.swift */; };
 		615B4356C38E4AD00AD0EF93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 615B48BAAEB7B9C7DD5CBD8F /* LaunchScreen.storyboard */; };
 		615B45E1811BE7575903861D /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B46BB7C1627B5B09D1E64 /* MapViewController.swift */; };
 		615B45F74FC51A142B8B72D7 /* Places+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4BC83277D4FD10B8EC54 /* Places+CoreDataClass.swift */; };
@@ -15,6 +16,7 @@
 		615B4A76C37C09BAFEF1F041 /* AddPlaceActivityProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */; };
 		615B4A80DF888A4D7BEF70D0 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B40B4F4D30CDA1BFAD80E /* Point.swift */; };
 		615B4AF3BB801BA37D7225DB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4F69F6361070D4A49255 /* AppDelegate.swift */; };
+		615B4D4DE20DD1F9E5393922 /* Dynamic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4EF03B1AF5EC98D101B5 /* Dynamic.swift */; };
 		615B4E757566C8E452CEBCCD /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B410A1DDC011C1495B0B1 /* CoreDataStack.swift */; };
 		615B4E99707AD6AA52CF1113 /* MapPin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B43849356DCEF41FA0DEC /* MapPin.swift */; };
 		615B4F17D2BCDA8A29EBD4E7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */; };
@@ -47,11 +49,13 @@
 		615B4702DA7257BE4EE431ED /* PlacesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
 		615B4816C1196FB1E2C97BB4 /* Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Places.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		615B482B3834A3A006C7592F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		615B483BAECB2453F4B427BB /* MKAnnotationView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MKAnnotationView+ext.swift"; sourceTree = "<group>"; };
 		615B4B88947AD9F8876BA566 /* CityTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityTableViewCell.swift; sourceTree = "<group>"; };
 		615B4BC83277D4FD10B8EC54 /* Places+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Places+CoreDataClass.swift"; sourceTree = "<group>"; };
 		615B4CD387DC03117C31C612 /* Places+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Places+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		615B4DCA0A8A8D8C8B59AC58 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddPlaceActivityProtocol.swift; sourceTree = "<group>"; };
+		615B4EF03B1AF5EC98D101B5 /* Dynamic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dynamic.swift; sourceTree = "<group>"; };
 		615B4F69F6361070D4A49255 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C23A6734285DA861007822F5 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		F88432857E9E4164D9EEC1E6 /* UITextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
@@ -190,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				615B4E02904B2CFF1714BFA8 /* AddPlaceActivityProtocol.swift */,
+				615B4EF03B1AF5EC98D101B5 /* Dynamic.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -247,6 +252,7 @@
 				F8843DABA4D0F20B5F8F6130 /* UIViewController+ext.swift */,
 				F8843E32010EEA2779463CA3 /* UIAlertController+ext.swift */,
 				F88432857E9E4164D9EEC1E6 /* UITextField.swift */,
+				615B483BAECB2453F4B427BB /* MKAnnotationView+ext.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -354,6 +360,8 @@
 				F8843D60CF130119F6B21451 /* UITextField.swift in Sources */,
 				F88436AA3F127FA6B5B8380A /* CustomTextField.swift in Sources */,
 				F88431A2A32D5338AB48372B /* ChangeLocationButton.swift in Sources */,
+				615B42DD60EAFDD8036AD44A /* MKAnnotationView+ext.swift in Sources */,
+				615B4D4DE20DD1F9E5393922 /* Dynamic.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
