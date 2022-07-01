@@ -9,7 +9,7 @@ protocol AddPlaceActivityProtocol {
 }
 
 extension AddPlaceActivityProtocol where Self: UIViewController {
-    func presentAddPlaceActivity(completion: @escaping (String, String) -> Void ) {
+    func presentAddPlaceActivity(completion: @escaping (String, String) -> Void) {
         let alertController = UIAlertController(title: "Add Place",message: nil, preferredStyle: .alert)
 
         alertController.addTextField { field in
@@ -20,12 +20,12 @@ extension AddPlaceActivityProtocol where Self: UIViewController {
             field.placeholder = "Type name of the place"
         }
 
-        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { _ in
-
+        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
             let titleTextField = alertController.textFields![0] as UITextField
             let detailsTextField = alertController.textFields![1] as UITextField
-
-            completion(titleTextField.text!, detailsTextField.text!)
+            if let title = titleTextField.text, let details = detailsTextField.text {
+                completion(title, details)
+            }
         })
 
         alertController.addAction(saveAction)

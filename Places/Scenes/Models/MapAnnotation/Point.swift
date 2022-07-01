@@ -12,6 +12,7 @@ protocol PointsTableViewCellDataSource {
 }
 
 class Point: NSObject, MKAnnotation, PointsTableViewCellDataSource {
+    static let identifier = "Point"
     var title: String?
     var details: String
     var coordinate: CLLocationCoordinate2D
