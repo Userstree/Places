@@ -4,6 +4,10 @@
 
 import UIKit
 
+protocol EditLocationViewControllerDelegate: AnyObject {
+    func deletePin(_ pointOnMap: PointOnMap)
+}
+
 class EditLocationViewController: UIViewController {
 
     private var viewModel: LocationsViewModel {
@@ -11,15 +15,24 @@ class EditLocationViewController: UIViewController {
 
         }
     }
+
+    weak var delegate: EditLocationViewControllerDelegate?
+
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
+
+    private var pointOnMap: PointOnMap
+
     private var index: Int
 
-    init(viewModel: LocationsViewModel, index: Int) {
+    init(viewModel: LocationsViewModel, index: Int, pointOnMap: PointOnMap) {
         self.viewModel = viewModel
         self.index = index
+        self.pointOnMap = pointOnMap
         super.init(nibName: nil, bundle: nil)
 
-        pointNameTextField.placeholder = "\(viewModel.locationsModel[index].title!)"
-        pointDetailsTextField.placeholder = "\(viewModel.locationsModel[index].details)"
+        pointNameTextField.placeholder = "\(pointOnMap.title)"
+        pointDetailsTextField.placeholder = "\(pointOnMap.details)"
     }
 
     required init?(coder: NSCoder) {
@@ -30,11 +43,21 @@ class EditLocationViewController: UIViewController {
 
     private var pointDetailsTextField = CustomTextField(placeholder: "CityLocation")
 
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Delete", for: .normal)
+        button.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        button.layer.cornerRadius = 9
+        button.backgroundColor = .systemRed
+        return button
+    }()
+
     private func configureNavBar() {
         title = "Edit"
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.2)
 
-        let doneNavItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneNavBarItemTapped) )
+        let doneNavItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneNavBarItemTapped))
         let cancelNavItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelNavBarItemTapped))
         navigationItem.rightBarButtonItem = doneNavItem
         navigationItem.leftBarButtonItem = cancelNavItem
@@ -49,7 +72,9 @@ class EditLocationViewController: UIViewController {
     }
 
     @objc private func doneNavBarItemTapped() {
-        viewModel.changeLocationInfo(title: pointNameTextField.text, details: pointDetailsTextField.text, index: index)
+        managedContext.setValue(pointNameTextField.text, forKey: "title")
+        managedContext.setValue(pointDetailsTextField.text, forKey: "details")
+        persistentContainer.saveContext()
         dismiss(animated: true)
     }
 
@@ -57,8 +82,15 @@ class EditLocationViewController: UIViewController {
         dismiss(animated: true)
     }
 
+    @objc private func deleteButtonTapped() {
+        managedContext.delete(pointOnMap)
+        persistentContainer.saveContext()
+        delegate?.deletePin(pointOnMap)
+        dismiss(animated: true)
+    }
+
     private func configureViews() {
-        [pointNameTextField, pointDetailsTextField].forEach(view.addSubview)
+        [pointNameTextField, pointDetailsTextField, deleteButton].forEach(view.addSubview)
         makeConstraints()
     }
 
@@ -67,12 +99,17 @@ class EditLocationViewController: UIViewController {
             pointNameTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             pointNameTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             pointNameTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            pointNameTextField.heightAnchor.constraint(equalToConstant: 25),
+            pointNameTextField.heightAnchor.constraint(equalToConstant: 32),
 
             pointDetailsTextField.topAnchor.constraint(equalTo: pointNameTextField.bottomAnchor, constant: 20),
             pointDetailsTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             pointDetailsTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            pointDetailsTextField.heightAnchor.constraint(equalToConstant: 25)
+            pointDetailsTextField.heightAnchor.constraint(equalToConstant: 32),
+
+            deleteButton.topAnchor.constraint(equalTo: pointDetailsTextField.bottomAnchor, constant: 20),
+            deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            deleteButton.widthAnchor.constraint(equalToConstant: 75),
+            deleteButton.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
 }

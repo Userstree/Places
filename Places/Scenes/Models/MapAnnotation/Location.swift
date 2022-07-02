@@ -11,10 +11,10 @@ protocol LocationsTableViewCellDataSource {
     var coordinate: CLLocationCoordinate2D { get set }
 }
 
-class Location: NSObject, MKAnnotation, LocationsTableViewCellDataSource {
-    var title: String?
-    var details: String
-    var coordinate: CLLocationCoordinate2D
+public class Location: NSObject, MKAnnotation, LocationsTableViewCellDataSource {
+    public var title: String?
+    public var details: String
+    public var coordinate: CLLocationCoordinate2D
 
     init(title: String, details: String, coordinate: CLLocationCoordinate2D) {
         self.title = title

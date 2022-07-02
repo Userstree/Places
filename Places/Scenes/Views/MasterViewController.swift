@@ -7,11 +7,12 @@ import CoreData
 
 class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate {
 
-//    lazy var dataProvider: PlacesProvider = {
-//        let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-//        let provider = PlacesProvider(with: managedContext, fetchedResultsControllerDelegate: self)
-//        return provider
-//    }()
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+
+    private lazy var dataProvider: PointOnMapProvider = {
+        let provider = PointOnMapProvider(with: managedContext, fetchedResultsControllerDelegate: self)
+        return provider
+    }()
 
     private var viewModel: LocationsViewModel
 
@@ -40,7 +41,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         isCitiesTableViewEnabled = false
     }
 
-    private lazy var mapViewController = MapViewController(viewModel: viewModel)
+    private lazy var mapViewController = MapViewController(viewModel: viewModel, pointsOnMap: dataProvider.fetchedResultsController.fetchedObjects)
 
     private lazy var placesTableViewController = LocationsTableViewController(viewModel: viewModel)
 

@@ -8,22 +8,31 @@
 
 import Foundation
 import CoreData
+import MapKit
 
 
-extension PointOnMap {
+public extension PointOnMap {
 
     @nonobjc public class func createFetchRequest() -> NSFetchRequest<PointOnMap> {
-        return NSFetchRequest<PointOnMap>(entityName: "PointOnMap")
+        NSFetchRequest<PointOnMap>(entityName: "PointOnMap")
     }
 
-    @NSManaged public var title: String
-    @NSManaged public var details: String
-    @NSManaged public var longitude: Double
-    @NSManaged public var latitude: Double
-    
-//    public var wrappedTitle: String {
-//        title ?? "Unkown title"
-//    }
+    @NSManaged var title: String
+    @NSManaged var details: String
+    @NSManaged var longitude: Double
+    @NSManaged var latitude: Double
+
+    public var location: Location {
+        Location(
+                title: title,
+                details: details,
+                coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        )
+    }
+
+    public var location2D: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
 //
 //    public var wrappedDetails: String {
 //        details ?? "Unknown details"

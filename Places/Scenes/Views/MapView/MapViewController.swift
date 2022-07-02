@@ -12,21 +12,31 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 
     var locationIndex = 0 {
         didSet {
-            if locationIndex > viewModel.locationsModel.count - 1 {
+            guard let count = pointsOnMap?.count else {
+                return
+            }
+            if locationIndex > count - 1 {
                 locationIndex = 0
             }
             if locationIndex < 0 {
-                locationIndex = viewModel.locationsModel.count - 1
+                locationIndex = count - 1
             }
-            render(viewModel.locationsModel[locationIndex].coordinate)
-            delegate?.locationIndexDidChange(locationIndex)
+            if let location = pointsOnMap?[locationIndex].location2D {
+                render(location)
+                delegate?.locationIndexDidChange(locationIndex)
+            }
         }
     }
 
+    private(set) var pointsOnMap: [PointOnMap]?
     private var viewModel: LocationsViewModel
 
-    init(viewModel: LocationsViewModel) {
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
+
+    init(viewModel: LocationsViewModel, pointsOnMap: [PointOnMap]?) {
         self.viewModel = viewModel
+        self.pointsOnMap = pointsOnMap
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -61,7 +71,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
-        map.addAnnotations(viewModel.locationsModel)
+        if let locations = pointsOnMap?.map { $0.location } {
+            map.addAnnotations(locations)
+        }
         return map
     }()
 
@@ -87,11 +99,19 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
             let point = gesture.location(in: mapView)
             let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
 
-            presentAddPlaceActivity { titleString, detailsString in
-                let annotation = Location(title: titleString,
-                                        details: detailsString,
-                                        coordinate: coordinate)
+            presentAddPlaceActivity { [unowned self] titleString, detailsString in
+                let annotation = Location(
+                        title: titleString,
+                        details: detailsString,
+                        coordinate: coordinate
+                )
+                let location = PointOnMap(context: self.managedContext)
+                location.title = titleString
+                location.details = detailsString
+                location.latitude = coordinate.latitude
+                location.longitude = coordinate.longitude
                 self.mapView.addAnnotation(annotation)
+                persistentContainer.saveContext()
             }
         }
     }
@@ -102,19 +122,18 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
     }
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let points = viewModel.locationsModel
-        if let point = points.first {
+        if let point = pointsOnMap?.first {
             manager.stopUpdatingLocation()
-            render(point.coordinate)
+            let location = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
+            render(location)
         }
     }
 
     private func render(_ location: CLLocationCoordinate2D) {
-        let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         let region = MKCoordinateRegion(center: location, span: span)
         mapView.setRegion(region, animated: true)
 
@@ -172,6 +191,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     }
 }
 
+extension MapViewController: EditLocationViewControllerDelegate{
+    func deletePin(_ pointOnMap: PointOnMap) {
+        mapView.removeAnnotation(pointOnMap.location)
+        print("dasdf")
+    }
+}
+
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is Location else {
@@ -182,7 +208,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Location.identifier)
             annotationView?.canShowCallout = true
-            annotationView?.loadCustomLines(customLines: [viewModel.locationsModel[locationIndex].details])
+            annotationView?.loadCustomLines(customLines: [pointsOnMap?[locationIndex].details ?? ""])
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView?.annotation = annotation
@@ -191,7 +217,8 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let editVC = EditLocationViewController(viewModel: viewModel, index: locationIndex)
+        let editVC = EditLocationViewController(viewModel: viewModel, index: locationIndex, pointOnMap: pointsOnMap![locationIndex])
+        editVC.delegate = self
         let navigationController = UINavigationController(rootViewController: editVC)
         if let sheet = navigationController.sheetPresentationController {
             sheet.detents = [.medium()]

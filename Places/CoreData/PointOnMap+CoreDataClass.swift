@@ -9,7 +9,7 @@
 import Foundation
 import CoreData
 
-
+@objc(PointOnMap)
 public class PointOnMap: NSManagedObject {
 
 }

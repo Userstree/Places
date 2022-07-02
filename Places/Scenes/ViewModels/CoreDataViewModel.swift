@@ -13,6 +13,6 @@ class DefaultCoreDataViewModel: CoreDataViewModel {
     var container = AppDelegate.sharedAppDelegate.coreDataStack
 
     init() {
-        container.managedViewContext
+        container.managedContext
     }
 }

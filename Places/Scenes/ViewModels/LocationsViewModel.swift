@@ -19,8 +19,6 @@ typealias LocationsCallback = (String) -> ()
 
 final class DefaultLocationsViewModel: LocationsViewModel {
 
-    var locations = [NSManagedObject]()
-
     var updateLocationCallback: LocationsCallback?
 
     var locationsModel = [Location]()
