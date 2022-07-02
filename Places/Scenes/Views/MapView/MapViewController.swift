@@ -29,13 +29,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     }
 
     private(set) var pointsOnMap: [PointOnMap]?
-    private var viewModel: LocationsViewModel
 
     private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
     private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
-    init(viewModel: LocationsViewModel, pointsOnMap: [PointOnMap]?) {
-        self.viewModel = viewModel
+    init(pointsOnMap: [PointOnMap]?) {
         self.pointsOnMap = pointsOnMap
         super.init(nibName: nil, bundle: nil)
     }
@@ -217,7 +215,8 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        let editVC = EditLocationViewController(viewModel: viewModel, index: locationIndex, pointOnMap: pointsOnMap![locationIndex])
+        guard let pointOnMap = pointsOnMap?[locationIndex] else { return }
+        let editVC = EditLocationViewController(pointOnMap: pointOnMap)
         editVC.delegate = self
         let navigationController = UINavigationController(rootViewController: editVC)
         if let sheet = navigationController.sheetPresentationController {

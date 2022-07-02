@@ -41,7 +41,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         isCitiesTableViewEnabled = false
     }
 
-    private lazy var mapViewController = MapViewController(viewModel: viewModel, pointsOnMap: dataProvider.fetchedResultsController.fetchedObjects)
+    private lazy var mapViewController = MapViewController(pointsOnMap: dataProvider.fetchedResultsController.fetchedObjects)
 
     private lazy var placesTableViewController = LocationsTableViewController(viewModel: viewModel)
 

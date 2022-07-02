@@ -33,10 +33,6 @@ public extension PointOnMap {
     public var location2D: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
-//
-//    public var wrappedDetails: String {
-//        details ?? "Unknown details"
-//    }
 }
 
 extension PointOnMap : Identifiable {

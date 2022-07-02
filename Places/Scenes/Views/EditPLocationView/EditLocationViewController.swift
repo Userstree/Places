@@ -10,12 +10,6 @@ protocol EditLocationViewControllerDelegate: AnyObject {
 
 class EditLocationViewController: UIViewController {
 
-    private var viewModel: LocationsViewModel {
-        didSet {
-
-        }
-    }
-
     weak var delegate: EditLocationViewControllerDelegate?
 
     private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
@@ -23,11 +17,7 @@ class EditLocationViewController: UIViewController {
 
     private var pointOnMap: PointOnMap
 
-    private var index: Int
-
-    init(viewModel: LocationsViewModel, index: Int, pointOnMap: PointOnMap) {
-        self.viewModel = viewModel
-        self.index = index
+    init(pointOnMap: PointOnMap) {
         self.pointOnMap = pointOnMap
         super.init(nibName: nil, bundle: nil)
 
@@ -72,8 +62,10 @@ class EditLocationViewController: UIViewController {
     }
 
     @objc private func doneNavBarItemTapped() {
-        managedContext.setValue(pointNameTextField.text, forKey: "title")
-        managedContext.setValue(pointDetailsTextField.text, forKey: "details")
+        managedContext.setValue(pointNameTextField.text, forKey: LocationEnum.title.rawValue)
+        managedContext.setValue(pointDetailsTextField.text, forKey: LocationEnum.details.rawValue)
+        managedContext.setValue(pointOnMap.latitude, forKey: LocationEnum.latitude.rawValue)
+        managedContext.setValue(pointOnMap.longitude, forKey: LocationEnum.longitude.rawValue)
         persistentContainer.saveContext()
         dismiss(animated: true)
     }
