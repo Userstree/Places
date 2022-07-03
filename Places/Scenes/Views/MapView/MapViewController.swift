@@ -69,7 +69,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
-        if let locations = pointsOnMap?.map { $0.location } {
+        if let locations = pointsOnMap?.map({ $0.location }) {
             map.addAnnotations(locations)
         }
         return map
@@ -108,8 +108,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
                 location.details = detailsString
                 location.latitude = coordinate.latitude
                 location.longitude = coordinate.longitude
+                self.pointsOnMap?.append(location)
                 self.mapView.addAnnotation(annotation)
-                persistentContainer.saveContext()
+                self.persistentContainer.saveContext()
             }
         }
     }
@@ -122,7 +123,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         manager.requestWhenInUseAuthorization()
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let point = pointsOnMap?.first {
             manager.stopUpdatingLocation()
             let location = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
@@ -141,6 +142,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     }
 
     @objc private func backButtonTapped() {
+        if pointsOnMap?.isEmpty {
+            return
+        }
         locationIndex -= 1
     }
 
