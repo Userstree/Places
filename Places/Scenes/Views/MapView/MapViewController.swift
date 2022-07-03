@@ -142,9 +142,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     }
 
     @objc private func backButtonTapped() {
-        if pointsOnMap?.isEmpty {
-            return
-        }
+//        if pointsOnMap?.isEmpty {
+//            return
+//        }
         locationIndex -= 1
     }
 
@@ -196,11 +196,15 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 extension MapViewController: EditLocationViewControllerDelegate{
     func deletePin(_ pointOnMap: PointOnMap) {
         mapView.removeAnnotation(pointOnMap.location)
+        pointsOnMap?.remove(at: locationIndex)
+        managedContext.delete(pointOnMap)
+
         print("dasdf")
     }
 }
 
 extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
+
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         guard annotation is Location else {
             return nil
