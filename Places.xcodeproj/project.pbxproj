@@ -27,6 +27,7 @@
 		F88431A2A32D5338AB48372B /* ChangeLocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843DF20A41EB3F036AE37C /* ChangeLocationButton.swift */; };
 		F88433A95EEF94578EAF772F /* MapControlItemsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88432F291EC2DBB403F6CDE /* MapControlItemsView.swift */; };
 		F88433F1BDEA9E53765E2B3E /* EditLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884346EE1CFE36DD4AD5391 /* EditLocationViewController.swift */; };
+		F88434685B5CAFDD4EE15EF5 /* TouchesPassView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8843C11DCC04C0314CF38AE /* TouchesPassView.swift */; };
 		F88434F2DEC00C9ED5B8C660 /* LocationEnum.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884325B33B43A9F9AB52327 /* LocationEnum.swift */; };
 		F88435AF50E97967F6B020A7 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = F884332EE0559064E2CDB6AD /* CoreDataStack.swift */; };
 		F884367A5FBA1ED56651A8C7 /* UIAlertController+ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = F88430DA40D39F052C549595 /* UIAlertController+ext.swift */; };
@@ -70,6 +71,7 @@
 		F88434D3EC4F19223BDFD548 /* Callbacks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Callbacks.swift; sourceTree = "<group>"; };
 		F884389B5F30E5F597E13126 /* CustomTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		F8843B3254C776EC58C3398B /* UIStackView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIStackView+ext.swift"; sourceTree = "<group>"; };
+		F8843C11DCC04C0314CF38AE /* TouchesPassView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchesPassView.swift; sourceTree = "<group>"; };
 		F8843CC30B356AA0947B9FF4 /* UIView+ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+ext.swift"; sourceTree = "<group>"; };
 		F8843D92B342A3186F1DA91A /* PointOnMapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointOnMapProvider.swift; sourceTree = "<group>"; };
 		F8843DF20A41EB3F036AE37C /* ChangeLocationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeLocationButton.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				615B4E02904B2CFF1714BFA8 /* AddLocationActivityProtocol.swift */,
 				615B4EF03B1AF5EC98D101B5 /* Dynamic.swift */,
 				F88434D3EC4F19223BDFD548 /* Callbacks.swift */,
+				F8843F3EF00835DEB6BF1E79 /* UIView */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -298,6 +301,14 @@
 			path = "UIView+ext";
 			sourceTree = "<group>";
 		};
+		F8843F3EF00835DEB6BF1E79 /* UIView */ = {
+			isa = PBXGroup;
+			children = (
+				F8843C11DCC04C0314CF38AE /* TouchesPassView.swift */,
+			);
+			path = UIView;
+			sourceTree = "<group>";
+		};
 		F8843F6800CFD1ED931328D1 /* LocationChangeButton */ = {
 			isa = PBXGroup;
 			children = (
@@ -397,6 +408,7 @@
 				F8843AB7F00FDD421B2F217E /* PointOnMapProvider.swift in Sources */,
 				F8843E7E86538374775CB47A /* Callbacks.swift in Sources */,
 				F88433A95EEF94578EAF772F /* MapControlItemsView.swift in Sources */,
+				F88434685B5CAFDD4EE15EF5 /* TouchesPassView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

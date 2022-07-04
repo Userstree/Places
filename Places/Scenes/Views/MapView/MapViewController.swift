@@ -89,7 +89,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
                         details: detailsString,
                         coordinate: coordinate
                 )
-                let location = PointOnMap(context: self.managedContext)
+                let location = PointOnMap(context: managedContext)
                 location.title = titleString
                 location.details = detailsString
                 location.latitude = coordinate.latitude

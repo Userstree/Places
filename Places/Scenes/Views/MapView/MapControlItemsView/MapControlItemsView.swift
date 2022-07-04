@@ -10,22 +10,34 @@ protocol MapViewBottomItemsDelegate: AnyObject {
     func mapModeSegmentedControlTapped(selectedSegmentIndex: Int)
 }
 
+
 class MapControlItemsView: UIViewController {
 
     weak var delegate: MapViewBottomItemsDelegate?
 
     var viewModel: LocationsViewModel
 
+    override var view: UIView! {
+        get {
+            super.view
+            return passThoughContainer
+        }
+        set {
+            super.view = passThoughContainer
+        }
+    }
+
     init(viewModel: LocationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        print("moved to bottom items")
         configureViews()
     }
 
     required init?(coder: NSCoder) {
         fatalError("required init?(coder: NSCoder) hasn't been implemented")
     }
+
+    private var passThoughContainer = TouchesPassView()
 
     private lazy var backwardButton: UIButton = {
         let button = ChangeLocationButton(image: UIImage(systemName: "arrow.backward")!)
@@ -94,5 +106,9 @@ class MapControlItemsView: UIViewController {
             forwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             forwardButton.bottomAnchor.constraint(equalTo: mapModeSegmentedControl.topAnchor, constant: -12),
         ])
+    }
+
+    func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        true
     }
 }
