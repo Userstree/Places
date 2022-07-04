@@ -19,7 +19,6 @@ class MapControlItemsView: UIViewController {
 
     override var view: UIView! {
         get {
-            super.view
             return passThoughContainer
         }
         set {
@@ -106,9 +105,5 @@ class MapControlItemsView: UIViewController {
             forwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             forwardButton.bottomAnchor.constraint(equalTo: mapModeSegmentedControl.topAnchor, constant: -12),
         ])
-    }
-
-    func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-        true
     }
 }

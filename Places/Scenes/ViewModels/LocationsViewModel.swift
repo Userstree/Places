@@ -7,9 +7,10 @@ import MapKit
 import CoreData
 
 protocol LocationsViewModel {
-    var updateLocationCallback: LocationsCallback?  { get set }
-    var dataProvider:           PointOnMapProvider! { get set }
-    var pointsOnMap:            [PointOnMap]?       { get set }
+    var updateLocationCallback: LocationsCallback? { get set }
+    var dataProvider: PointOnMapProvider! { get set }
+    var pointsOnMap: [PointOnMap]? { get set }
+    func loadLocations()
     func appendPoint(point: PointOnMap)
     func removePoint(point: PointOnMap)
     func changeLocationInfo(title: String?, details: String?, index: Int)
@@ -24,15 +25,9 @@ final class DefaultLocationsViewModel: LocationsViewModel {
     var pointsOnMap: [PointOnMap]?
 
     func loadLocations() {
-//        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-//        let managedContext = appDelegate.coreDataStack.managedContext
-
-//        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Student")
-//        do {
-//            locations = try managedContext.fetch(fetchRequest)
-//        } catch let error as NSError {
-//            print("Could not fetch. \(error), \(error.userInfo)")
-//        }
+        if let objects = dataProvider.fetchedResultsController.fetchedObjects {
+            pointsOnMap = objects
+        }
     }
 
     func changeLocationInfo(

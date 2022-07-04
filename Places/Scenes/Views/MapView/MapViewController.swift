@@ -1,6 +1,5 @@
 import UIKit
 import MapKit
-import CoreLocation
 
 protocol MapViewControllerDelegate: AnyObject {
     func locationIndexDidChange(_ index: Int)
@@ -51,7 +50,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 
     private let manager = CLLocationManager()
 
-    private lazy var mapView: MKMapView = {
+    private lazy var mainMapView: MKMapView = {
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
@@ -75,13 +74,13 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         longPressGestureRec.minimumPressDuration = 0.7
         longPressGestureRec.delaysTouchesBegan = true
         longPressGestureRec.delegate = self
-        mapView.addGestureRecognizer(longPressGestureRec)
+        mainMapView.addGestureRecognizer(longPressGestureRec)
     }
 
     @objc func addAnnotationOnLongPress(gesture: UILongPressGestureRecognizer) {
         if gesture.state == .ended {
-            let point = gesture.location(in: mapView)
-            let coordinate = mapView.convert(point, toCoordinateFrom: mapView)
+            let point = gesture.location(in: mainMapView)
+            let coordinate = mainMapView.convert(point, toCoordinateFrom: mainMapView)
 
             presentAddPlaceActivity { [unowned self] titleString, detailsString in
                 let annotation = Location(
@@ -95,7 +94,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
                 location.latitude = coordinate.latitude
                 location.longitude = coordinate.longitude
                 viewModel.pointsOnMap?.append(location)
-                mapView.addAnnotation(annotation)
+                mainMapView.addAnnotation(annotation)
                 persistentContainer.saveContext()
             }
         }
@@ -105,7 +104,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         super.viewDidAppear(animated)
 
         manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.delegate = self
         manager.requestWhenInUseAuthorization()
     }
 
@@ -120,11 +118,11 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     private func render(_ location: CLLocationCoordinate2D) {
         let span = MKCoordinateSpan(latitudeDelta: 0.5, longitudeDelta: 0.5)
         let region = MKCoordinateRegion(center: location, span: span)
-        mapView.setRegion(region, animated: true)
+        mainMapView.setRegion(region, animated: true)
 
         let pin = MKPointAnnotation()
         pin.coordinate = location
-        mapView.addAnnotation(pin)
+        mainMapView.addAnnotation(pin)
     }
 
     func forwardButtonTapped(locationIndex: Int) {
@@ -137,26 +135,26 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 
     func mapModeSegmentedControlTapped(selectedSegmentIndex: Int) {
         if selectedSegmentIndex == 0 {
-            mapView.mapType = .standard
+            mainMapView.mapType = .standard
         } else if selectedSegmentIndex == 1 {
-            mapView.mapType = .satellite
+            mainMapView.mapType = .satellite
         } else {
-            mapView.mapType = .hybrid
+            mainMapView.mapType = .hybrid
         }
     }
 
     private func configureViews() {
         add(mapViewBottomItems, frame: view.frame)
-        [mapView, mapViewBottomItems.view].forEach(view.addSubview)
+        [mainMapView, mapViewBottomItems.view].forEach(view.addSubview)
         makeConstraints()
     }
 
     private func makeConstraints() {
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor),
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            mainMapView.topAnchor.constraint(equalTo: view.topAnchor),
+            mainMapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            mainMapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            mainMapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
             mapViewBottomItems.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
@@ -165,11 +163,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 
 extension MapViewController: EditLocationViewControllerDelegate{
     func deletePin(_ pointOnMap: PointOnMap) {
-        mapView.removeAnnotation(pointOnMap.location)
+        mainMapView.removeAnnotation(pointOnMap.location)
         viewModel.pointsOnMap?.remove(at: locationIndex)
         managedContext.delete(pointOnMap)
-
-        print("dasdf")
     }
 }
 
@@ -190,6 +186,10 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         return annotationView
+    }
+
+    public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+//        title =
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {

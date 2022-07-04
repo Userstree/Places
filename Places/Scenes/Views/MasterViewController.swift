@@ -43,6 +43,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func loadView() {
         super.loadView()
         viewModel.dataProvider = dataProvider
+        viewModel.loadLocations()
     }
 
     override func viewDidLoad() {
@@ -68,7 +69,6 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     private func configureNavigationBar() {
-        title = viewModel.pointsOnMap?[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities
