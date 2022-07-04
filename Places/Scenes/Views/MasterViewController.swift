@@ -36,14 +36,14 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        isCitiesTableViewEnabled = false
-    }
-
-    private lazy var mapViewController = MapViewController(pointsOnMap: dataProvider.fetchedResultsController.fetchedObjects)
+    private lazy var mapViewController = MapViewController(viewModel: viewModel)
 
     private lazy var placesTableViewController = LocationsTableViewController(viewModel: viewModel)
+
+    override func loadView() {
+        super.loadView()
+        viewModel.dataProvider = dataProvider
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +52,11 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
         mapViewController.delegate = self
         configureNavigationBar()
         setupChildViewControllers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        isCitiesTableViewEnabled = false
     }
 
     override func viewWillLayoutSubviews() {
@@ -63,7 +68,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     }
 
     private func configureNavigationBar() {
-        title = viewModel.locationsModel[mapViewController.locationIndex].title
+        title = viewModel.pointsOnMap?[mapViewController.locationIndex].title
         navigationController?.navigationBar.backgroundColor = .white.withAlphaComponent(0.4)
         let cities = UIBarButtonItem(barButtonSystemItem: .bookmarks, target: self, action: #selector(citiesBookNavBarItemTapped))
         navigationItem.rightBarButtonItem = cities
@@ -80,7 +85,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
 
 extension MasterViewController: MapViewControllerDelegate {
     func locationIndexDidChange(_ index: Int) {
-        title = viewModel.locationsModel[index].title
+        title = viewModel.pointsOnMap?[index].title
     }
 }
 

@@ -6,13 +6,17 @@ protocol MapViewControllerDelegate: AnyObject {
     func locationIndexDidChange(_ index: Int)
 }
 
-class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocationActivityProtocol {
+class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocationActivityProtocol, MapViewBottomItemsDelegate {
+
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
     weak var delegate: MapViewControllerDelegate?
 
     var locationIndex = 0 {
         didSet {
-            guard let count = pointsOnMap?.count else {
+            guard let count = viewModel.pointsOnMap?.count else {
                 return
             }
             if locationIndex > count - 1 {
@@ -21,20 +25,17 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
             if locationIndex < 0 {
                 locationIndex = count - 1
             }
-            if let location = pointsOnMap?[locationIndex].location2D {
+            if let location = viewModel.pointsOnMap?[locationIndex].location2D {
                 render(location)
                 delegate?.locationIndexDidChange(locationIndex)
             }
         }
     }
 
-    private(set) var pointsOnMap: [PointOnMap]?
+    private var viewModel: LocationsViewModel
 
-    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
-
-    init(pointsOnMap: [PointOnMap]?) {
-        self.pointsOnMap = pointsOnMap
+    init(viewModel: LocationsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,25 +43,10 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
 
-    private lazy var backwardButton: UIButton = {
-        let button = ChangeLocationButton(image: UIImage(systemName: "arrow.backward")!)
-        button.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var forwardButton: UIButton = {
-        let button = ChangeLocationButton(image: UIImage(systemName: "arrow.forward")!)
-        button.addTarget(self, action: #selector(forwardButtonTapped), for: .touchUpInside)
-        return button
-    }()
-
-    private lazy var mapModeSegmentedControl: UISegmentedControl = {
-        let modes: [String] = ["Standard", "Satellite", "Hybrid"]
-        let segmentedControl = UISegmentedControl(items: modes)
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(mapModeSegmentedControlChanged(_:)), for: .valueChanged)
-        return segmentedControl
+    private lazy var mapViewBottomItems: MapControlItemsView = {
+        let view = MapControlItemsView(viewModel: viewModel)
+        view.delegate = self
+        return view
     }()
 
     private let manager = CLLocationManager()
@@ -69,7 +55,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         let map = MKMapView()
         map.translatesAutoresizingMaskIntoConstraints = false
         map.delegate = self
-        if let locations = pointsOnMap?.map({ $0.location }) {
+        if let locations = viewModel.pointsOnMap?.map({ $0.location }) {
             map.addAnnotations(locations)
         }
         return map
@@ -108,9 +94,9 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
                 location.details = detailsString
                 location.latitude = coordinate.latitude
                 location.longitude = coordinate.longitude
-                self.pointsOnMap?.append(location)
-                self.mapView.addAnnotation(annotation)
-                self.persistentContainer.saveContext()
+                viewModel.pointsOnMap?.append(location)
+                mapView.addAnnotation(annotation)
+                persistentContainer.saveContext()
             }
         }
     }
@@ -124,7 +110,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
     }
 
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let point = pointsOnMap?.first {
+        if let point = viewModel.pointsOnMap?.first {
             manager.stopUpdatingLocation()
             let location = CLLocationCoordinate2D(latitude: point.latitude, longitude: point.longitude)
             render(location)
@@ -141,32 +127,27 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
         mapView.addAnnotation(pin)
     }
 
-    @objc private func backButtonTapped() {
-//        if pointsOnMap?.isEmpty {
-//            return
-//        }
-        locationIndex -= 1
+    func forwardButtonTapped(locationIndex: Int) {
+        self.locationIndex += locationIndex
     }
 
-    @objc private func forwardButtonTapped() {
-        locationIndex += 1
+    func backButtonTapped(locationIndex: Int) {
+        self.locationIndex += locationIndex
     }
 
-    @objc private func mapModeSegmentedControlChanged(_ sender: UISegmentedControl) {
-        if sender.selectedSegmentIndex == 0 {
+    func mapModeSegmentedControlTapped(selectedSegmentIndex: Int) {
+        if selectedSegmentIndex == 0 {
             mapView.mapType = .standard
-            mapModeSegmentedControl.backgroundColor = .clear
-        } else if sender.selectedSegmentIndex == 1 {
+        } else if selectedSegmentIndex == 1 {
             mapView.mapType = .satellite
-            mapModeSegmentedControl.backgroundColor = .white
         } else {
             mapView.mapType = .hybrid
-            mapModeSegmentedControl.backgroundColor = .white
         }
     }
 
     private func configureViews() {
-        [mapView, mapModeSegmentedControl, backwardButton, forwardButton].forEach(view.addSubview)
+        add(mapViewBottomItems, frame: view.frame)
+        [mapView, mapViewBottomItems.view].forEach(view.addSubview)
         makeConstraints()
     }
 
@@ -177,18 +158,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
             mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            mapModeSegmentedControl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            mapModeSegmentedControl.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-
-            backwardButton.heightAnchor.constraint(equalToConstant: 45),
-            backwardButton.widthAnchor.constraint(equalToConstant: 45),
-            backwardButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
-            backwardButton.bottomAnchor.constraint(equalTo: mapModeSegmentedControl.topAnchor, constant: -12),
-
-            forwardButton.heightAnchor.constraint(equalToConstant: 45),
-            forwardButton.widthAnchor.constraint(equalToConstant: 45),
-            forwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
-            forwardButton.bottomAnchor.constraint(equalTo: mapModeSegmentedControl.topAnchor, constant: -12),
+            mapViewBottomItems.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
 }
@@ -196,7 +166,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
 extension MapViewController: EditLocationViewControllerDelegate{
     func deletePin(_ pointOnMap: PointOnMap) {
         mapView.removeAnnotation(pointOnMap.location)
-        pointsOnMap?.remove(at: locationIndex)
+        viewModel.pointsOnMap?.remove(at: locationIndex)
         managedContext.delete(pointOnMap)
 
         print("dasdf")
@@ -214,7 +184,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
         if annotationView == nil {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: Location.identifier)
             annotationView?.canShowCallout = true
-            annotationView?.loadCustomLines(customLines: [pointsOnMap?[locationIndex].details ?? ""])
+            annotationView?.loadCustomLines(customLines: [viewModel.pointsOnMap?[locationIndex].details ?? ""])
             annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         } else {
             annotationView?.annotation = annotation
@@ -223,7 +193,7 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let pointOnMap = pointsOnMap?[locationIndex] else { return }
+        guard let pointOnMap = viewModel.pointsOnMap?[locationIndex] else { return }
         let editVC = EditLocationViewController(pointOnMap: pointOnMap)
         editVC.delegate = self
         let navigationController = UINavigationController(rootViewController: editVC)

@@ -5,11 +5,17 @@
 import Foundation
 import CoreData
 
-class PointOnMapProvider {
-    private(set) var managedObjectContext: NSManagedObjectContext
+protocol PointOnMapProvidable {
+    init(with managedObjectContext: NSManagedObjectContext, fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate)
+    var fetchedResultsController: NSFetchedResultsController<PointOnMap> { get set }
+    var managedObjectContext: NSManagedObjectContext { get set }
+}
+
+class PointOnMapProvider: PointOnMapProvidable {
+    var managedObjectContext: NSManagedObjectContext
     private weak var fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate?
 
-    init(with managedObjectContext: NSManagedObjectContext, fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate) {
+    required init(with managedObjectContext: NSManagedObjectContext, fetchedResultsControllerDelegate: NSFetchedResultsControllerDelegate) {
         self.managedObjectContext = managedObjectContext
         self.fetchedResultsControllerDelegate = fetchedResultsControllerDelegate
     }

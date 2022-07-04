@@ -7,23 +7,23 @@ import MapKit
 import CoreData
 
 protocol LocationsViewModel {
-    var locationsModel: [Location] { get }
-    func appendLocation(point: Location)
-    func removeLocation(point: Location)
+    var updateLocationCallback: LocationsCallback?  { get set }
+    var dataProvider:           PointOnMapProvider! { get set }
+    var pointsOnMap:            [PointOnMap]?       { get set }
+    func appendPoint(point: PointOnMap)
+    func removePoint(point: PointOnMap)
     func changeLocationInfo(title: String?, details: String?, index: Int)
-    var updateLocationCallback: LocationsCallback? { get set }
-    init(model: [Location])
 }
-
-typealias LocationsCallback = (String) -> ()
 
 final class DefaultLocationsViewModel: LocationsViewModel {
 
+    var dataProvider: PointOnMapProvider!
+
     var updateLocationCallback: LocationsCallback?
 
-    var locationsModel = [Location]()
+    var pointsOnMap: [PointOnMap]?
 
-    func loadLocations(){
+    func loadLocations() {
 //        let appDelegate = UIApplication.shared.delegate as! AppDelegate
 //        let managedContext = appDelegate.coreDataStack.managedContext
 
@@ -35,26 +35,28 @@ final class DefaultLocationsViewModel: LocationsViewModel {
 //        }
     }
 
-    func changeLocationInfo(title: String? = nil, details: String? = nil, index: Int) {
+    func changeLocationInfo(
+            title: String? = nil,
+            details: String? = nil,
+            index: Int
+    ) {
         if let title = title {
-            locationsModel[index].title = title
+            pointsOnMap?[index].title = title
         }
 
         if let details = details {
-            locationsModel[index].details = details
+            pointsOnMap?[index].details = details
         }
         updateLocationCallback?(title!)
     }
 
-    required init(model: [Location]) {
-        locationsModel = model
+    func appendPoint(point: PointOnMap) {
+        pointsOnMap?.append(point)
     }
 
-    func appendLocation(point: Location) {
-        locationsModel.append(point)
-    }
-
-    func removeLocation(point: Location) {
-        locationsModel = locationsModel.filter { $0 !== point }
+    func removePoint(point: PointOnMap) {
+        pointsOnMap = pointsOnMap?.filter {
+            $0 !== point
+        }
     }
 }

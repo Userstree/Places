@@ -57,7 +57,10 @@ class LocationsTableViewController: UIViewController {
 extension LocationsTableViewController: UITableViewDelegate, UITableViewDataSource {
 
     public func numberOfSections(in tableView: UITableView) -> Int {
-        viewModel.locationsModel.count
+        guard let count = viewModel.pointsOnMap?.count else {
+            fatalError("guard failure handling has not been implemented")
+        }
+        return count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -79,7 +82,7 @@ extension LocationsTableViewController: UITableViewDelegate, UITableViewDataSour
 
     public func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            viewModel.removeLocation(point: viewModel.locationsModel[indexPath.section])
+            viewModel.removePoint(point: viewModel.pointsOnMap![indexPath.section])
             tableView.reloadData()
         }
     }
@@ -93,7 +96,7 @@ extension LocationsTableViewController: UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CityTableViewCell.identifier,
                                                     for: indexPath) as! CityTableViewCell
-        cell.configure(with: viewModel.locationsModel[indexPath.section] )
+        cell.configure(with: viewModel.pointsOnMap![indexPath.section].location )
         cell.backgroundColor = .systemBackground
         cell.accessoryType = .disclosureIndicator
         return cell
