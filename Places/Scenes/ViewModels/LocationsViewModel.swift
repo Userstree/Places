@@ -17,6 +17,7 @@ protocol LocationsViewModel {
 }
 
 final class DefaultLocationsViewModel: LocationsViewModel {
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
     var dataProvider: PointOnMapProvider!
 
@@ -47,11 +48,13 @@ final class DefaultLocationsViewModel: LocationsViewModel {
 
     func appendPoint(point: PointOnMap) {
         pointsOnMap?.append(point)
+        persistentContainer.saveContext()
     }
 
     func removePoint(point: PointOnMap) {
         pointsOnMap = pointsOnMap?.filter {
             $0 !== point
         }
+        persistentContainer.saveContext()
     }
 }

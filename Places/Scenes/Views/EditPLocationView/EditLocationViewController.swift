@@ -10,24 +10,30 @@ protocol EditLocationViewControllerDelegate: AnyObject {
 
 class EditLocationViewController: UIViewController {
 
-    weak var delegate: EditLocationViewControllerDelegate?
+    var viewModel: LocationsViewModel
 
-    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
+    private var pointOnMap: PointOnMap!
 
-    private var pointOnMap: PointOnMap
-
-    init(pointOnMap: PointOnMap) {
-        self.pointOnMap = pointOnMap
+    init(pointOnMapIndex: Int, viewModel: LocationsViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-
-        pointNameTextField.placeholder = "\(pointOnMap.title)"
-        pointDetailsTextField.placeholder = "\(pointOnMap.details)"
+        
+        guard let location = viewModel.pointsOnMap?[pointOnMapIndex] else {
+            return
+        }
+        pointOnMap = location
+        pointNameTextField.placeholder = "\(location.title)"
+        pointDetailsTextField.placeholder = "\(location.details)"
     }
 
     required init?(coder: NSCoder) {
         fatalError("init?(coder: NSCoder) hasn't been implemented")
     }
+
+    weak var delegate: EditLocationViewControllerDelegate?
+
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
     private var pointNameTextField = CustomTextField(placeholder: "CityName")
 
@@ -76,8 +82,9 @@ class EditLocationViewController: UIViewController {
 
     @objc private func deleteButtonTapped() {
         managedContext.delete(pointOnMap)
-        persistentContainer.saveContext()
+//        persistentContainer.saveContext()
         delegate?.deletePin(pointOnMap)
+        viewModel.removePoint(point: pointOnMap)
         dismiss(animated: true)
     }
 

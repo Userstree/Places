@@ -30,6 +30,7 @@ class CoreDataStack {
 
     func saveContext() {
         guard managedContext.hasChanges else { return }
+        print("It has changes")
         do {
             try managedContext.save()
         } catch let error as NSError {

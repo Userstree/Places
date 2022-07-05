@@ -93,7 +93,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate, AddLocat
                 location.details = detailsString
                 location.latitude = coordinate.latitude
                 location.longitude = coordinate.longitude
-                viewModel.pointsOnMap?.append(location)
+                viewModel.appendPoint(point: location)
                 mainMapView.addAnnotation(annotation)
                 persistentContainer.saveContext()
             }
@@ -189,12 +189,16 @@ extension MapViewController: CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     public func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
-//        title =
+        guard let pointsOnMap = viewModel.pointsOnMap, let annotationTitle = view.annotation?.title  else { return }
+        let titles = pointsOnMap.map { $0.title }
+        guard let index = titles.firstIndex(of: annotationTitle!) else {
+            fatalError("guard failure handling has not been implemented")
+        }
+        locationIndex = index
     }
 
     public func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let pointOnMap = viewModel.pointsOnMap?[locationIndex] else { return }
-        let editVC = EditLocationViewController(pointOnMap: pointOnMap)
+        let editVC = EditLocationViewController(pointOnMapIndex: locationIndex, viewModel: viewModel)
         editVC.delegate = self
         let navigationController = UINavigationController(rootViewController: editVC)
         if let sheet = navigationController.sheetPresentationController {
