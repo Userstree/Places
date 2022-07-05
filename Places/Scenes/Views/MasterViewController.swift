@@ -43,6 +43,7 @@ class MasterViewController: UIViewController, NSFetchedResultsControllerDelegate
     override func loadView() {
         super.loadView()
         viewModel.dataProvider = dataProvider
+        placesTableViewController.dataManager.delegate = self
         viewModel.loadLocations()
     }
 

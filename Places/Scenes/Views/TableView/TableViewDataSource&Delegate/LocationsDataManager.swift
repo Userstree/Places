@@ -5,6 +5,10 @@
 import UIKit
 
 
+protocol LocationsTableViewControllerDelegate: AnyObject {
+    func didSelectItemAt(_ index: Int)
+}
+
 class LocationsDataManager: NSObject {
     private var viewModel: LocationsViewModel
     weak var delegate: LocationsTableViewControllerDelegate?
@@ -52,7 +56,6 @@ extension LocationsDataManager: UITableViewDataSource {
 }
 
 extension LocationsDataManager: UITableViewDelegate {
-
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         delegate?.didSelectItemAt(indexPath.section)

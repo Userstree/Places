@@ -9,6 +9,8 @@ protocol EditLocationViewControllerDelegate: AnyObject {
 }
 
 class EditLocationViewController: UIViewController {
+    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
+    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
     var viewModel: LocationsViewModel
 
@@ -17,7 +19,7 @@ class EditLocationViewController: UIViewController {
     init(pointOnMapIndex: Int, viewModel: LocationsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        
+
         guard let location = viewModel.pointsOnMap?[pointOnMapIndex] else {
             return
         }
@@ -31,9 +33,6 @@ class EditLocationViewController: UIViewController {
     }
 
     weak var delegate: EditLocationViewControllerDelegate?
-
-    private let managedContext = AppDelegate.sharedAppDelegate.coreDataStack.managedContext
-    private let persistentContainer = AppDelegate.sharedAppDelegate.coreDataStack
 
     private var pointNameTextField = CustomTextField(placeholder: "CityName")
 
